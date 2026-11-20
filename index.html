@@ -1,0 +1,2030 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Soline Pignal, product designer</title>
+<meta name="description" content="Soline Pignal, product designer for complex tools: care planning, cybersecurity, 3D for architects.">
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add('js-intro');
+  setTimeout(function () { d.classList.remove('js-intro'); }, 4000);
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300..700&display=swap">
+<style>
+@property --c { syntax: '<color>'; inherits: true; initial-value: #dadce0; }
+@property --d { syntax: '<color>'; inherits: true; initial-value: #3a3c42; }
+@property --tc { syntax: '<color>'; inherits: true; initial-value: #F4CFC9; }
+@property --td { syntax: '<color>'; inherits: true; initial-value: #8C2F28; }
+
+:root {
+  --ground: #EEF0F6;
+  --ink: #1D1D1F;
+  --ink-2: #55565C;
+  --line: rgb(29 29 31 / .16);
+  --scrim: rgb(24 25 28 / .36);
+  --s1: #FFD9EA; --s2: #D3E4FF; --s3: #D0F3E4; --s4: #E6DBFF;
+  --i1: #E35D9F; --i2: #E9A23B; --i3: #2BB596; --i4: #4A86F0; --i5: #9567F2;
+  --pad: clamp(20px, 4vw, 56px);
+  --max: 1440px;
+  --hh: 64px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --font: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color-scheme: light;
+}
+@media (max-width: 699px) { :root { --hh: 56px; } }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #111217;
+    --ink: #F2F2F4;
+    --ink-2: #A9AAB0;
+    --line: rgb(242 242 244 / .16);
+    --scrim: rgb(0 0 0 / .58);
+    --s1: #3A1C35; --s2: #162746; --s3: #0E332E; --s4: #261C48;
+    --i1: #FF8CC4; --i2: #FFC96B; --i3: #6BE8C6; --i4: #86B2FF; --i5: #C3A2FF;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  background: var(--ground);
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+}
+html.locked { overflow: hidden; }
+html.bubble-cursor, html.bubble-cursor * { cursor: none !important; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+
+/* Soap-film sky: soft colour fields drifting slowly behind everything */
+.sky { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: var(--ground); }
+.sky i {
+  position: absolute; width: 80vmax; height: 80vmax; border-radius: 50%;
+  background: radial-gradient(closest-side, var(--bc), transparent);
+  will-change: transform;
+  animation: drift var(--t) ease-in-out infinite alternate;
+}
+.sky .b1 { --bc: var(--s1); left: -26vmax; top: -32vmax; --t: 34s; --dx: 9vmax; --dy: 7vmax; }
+.sky .b2 { --bc: var(--s2); right: -28vmax; top: -20vmax; --t: 41s; --dx: -8vmax; --dy: 9vmax; }
+.sky .b3 { --bc: var(--s3); left: -12vmax; bottom: -44vmax; --t: 47s; --dx: 11vmax; --dy: -7vmax; }
+.sky .b4 { --bc: var(--s4); right: -24vmax; bottom: -40vmax; --t: 38s; --dx: -9vmax; --dy: -8vmax; }
+.sky .b5 {
+  --bc: color-mix(in oklab, var(--tc) 80%, #ffffff);
+  left: 22vw; top: 6vh; width: 62vmax; height: 62vmax; --t: 29s; --dx: 7vmax; --dy: 6vmax;
+  transition: --tc 1.4s ease, --td 1.4s ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sky .b5 { --bc: color-mix(in oklab, var(--td) 55%, #111217); }
+}
+@keyframes drift { to { transform: translate3d(var(--dx), var(--dy), 0) scale(1.12); } }
+@media (prefers-reduced-motion: reduce) { .sky i { animation: none; } }
+
+.page { transition: transform 880ms cubic-bezier(.62, 0, .18, 1); }
+.page.receded { transform: scale(.94); }
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+
+/* Header */
+.top { position: sticky; top: 0; z-index: 20; height: var(--hh); margin-bottom: calc(-1 * var(--hh)); }
+.top::before {
+  content: ''; position: absolute; inset: 0; opacity: 0;
+  background: color-mix(in oklab, var(--ground) 74%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(180%) blur(18px);
+  transition: opacity .3s;
+}
+.top.solid::before { opacity: 1; }
+.top-in { position: relative; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.name { font-weight: 600; font-size: 16px; letter-spacing: -.02em; color: var(--ink); text-decoration: none; padding-block: 10px; white-space: nowrap; }
+.nav { display: flex; gap: 2px; margin-right: -14px; flex: none; }
+.nav a, .nav-btn {
+  display: flex; align-items: center; gap: 7px;
+  color: var(--ink-2); text-decoration: none; font: inherit; font-size: 14px; line-height: 1.5;
+  padding: 11px 14px; border: 0; border-radius: 999px; background: none; cursor: pointer;
+  transition: color .2s, background-color .2s;
+}
+.nav a:hover, .nav-btn:hover, .nav-btn[aria-expanded="true"] { color: var(--ink); background: var(--line); }
+.nav-btn svg { transition: rotate .35s var(--ease); }
+.nav-btn[aria-expanded="true"] svg { rotate: 180deg; }
+@media (max-width: 519px) { .nav a, .nav-btn { padding-inline: 9px; } .nav { margin-right: -9px; } }
+
+/* Index: every experience at a glance, in bubble glass */
+.index {
+  position: absolute; top: calc(100% - 4px); right: calc(var(--pad) - 8px);
+  width: min(500px, calc(100vw - 2 * var(--pad)));
+  padding: 8px; border-radius: 26px;
+  background: color-mix(in oklab, var(--ground) 68%, transparent);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .45), 0 34px 64px -30px rgb(0 0 0 / .34);
+  transform-origin: calc(100% - 64px) 0;
+}
+.index[hidden] { display: none; }
+.index::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: conic-gradient(from 200deg, var(--i1), var(--i2), var(--i3), var(--i4), var(--i5), var(--i1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: .65;
+}
+.ix-list { position: relative; list-style: none; margin: 0; padding: 0; }
+.ix-row {
+  width: 100%; display: grid; grid-template-columns: 12px 3.1em auto minmax(0, 1fr); align-items: center; gap: 12px;
+  padding: 12px 14px; border: 0; border-radius: 18px; background: none;
+  font: inherit; font-size: 15px; color: var(--ink); text-align: left; cursor: pointer;
+  transition: background-color .2s;
+}
+.ix-row:hover { background: color-mix(in oklab, var(--ink) 6%, transparent); }
+.ix-row.on { background: color-mix(in oklab, var(--c) 72%, transparent); }
+.ix-row:focus-visible { outline-offset: -2px; border-radius: 18px; }
+.ix-dot {
+  width: 10px; height: 10px; border-radius: 50%; background: var(--c);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--d) 35%, transparent);
+  transition: transform .35s var(--ease);
+}
+.ix-row.on .ix-dot { transform: scale(1.35); background: var(--d); }
+.ix-year { font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ix-title { font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.ix-role { font-size: 13px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ix-row.on { background: color-mix(in oklab, var(--d) 60%, transparent); }
+  :root:not([data-theme="light"]) .index { box-shadow: inset 0 1px 0 rgb(255 255 255 / .08), 0 34px 64px -30px rgb(0 0 0 / .7); }
+}
+@media (max-width: 519px) {
+  .ix-row { grid-template-columns: 12px 3.1em minmax(0, 1fr); }
+  .ix-title { overflow: hidden; text-overflow: ellipsis; }
+  .ix-role { display: none; }
+}
+
+/* Work: a pinned stage, driven by scroll. The first stretch deals the deck, then one stop per card */
+.crate { position: relative; height: calc(100svh + 70svh + 6 * 40svh); }
+.pin { position: sticky; top: 0; height: 100svh; overflow: hidden; overflow: clip; }
+.row { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; z-index: 1; }
+.slot { position: absolute; left: 0; top: 0; width: var(--w); height: var(--h); will-change: transform; }
+.slot.is-lifted { visibility: hidden; }
+
+.card {
+  display: block; width: 100%; height: 100%;
+  padding: 0; border: 0; background: none; font: inherit; color: inherit;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.card:focus-visible { outline: none; }
+.tilt { display: block; width: 100%; height: 100%; border-radius: var(--r); will-change: transform; }
+.cardlike { container-type: inline-size; background: var(--c); color: var(--d); overflow: hidden; }
+.cf {
+  display: block; position: relative; width: 100%; height: 100%;
+  border-radius: var(--r);
+  box-shadow: inset 0 0 0 .5px rgb(0 0 0 / .08), 0 1px 2px rgb(0 0 0 / .08), 0 calc(var(--h) * .045) calc(var(--h) * .09) calc(var(--h) * -.035) rgb(0 0 0 / .34);
+  transition: box-shadow .5s var(--ease);
+}
+.slot.hover .cf {
+  box-shadow: inset 0 0 0 .5px rgb(0 0 0 / .08), 0 2px 4px rgb(0 0 0 / .08), 0 calc(var(--h) * .08) calc(var(--h) * .14) calc(var(--h) * -.05) rgb(0 0 0 / .42);
+}
+.cf-name {
+  position: absolute; left: 8cqi; top: 7cqi; right: 8cqi;
+  font-size: 6cqi; line-height: 1.15; font-weight: 600; letter-spacing: -.02em;
+}
+.cf-year {
+  position: absolute; left: 5cqi; bottom: -6cqi;
+  font-size: 39cqi; line-height: 1; font-weight: 600; letter-spacing: -.07em;
+  color: color-mix(in oklab, var(--d) 15%, transparent);
+  white-space: nowrap; pointer-events: none;
+}
+.cf-art {
+  position: absolute; left: 12%; right: 12%; top: 20%; height: 46%;
+  display: flex; align-items: center; justify-content: center;
+}
+.cf-art .art { width: 100%; height: auto; max-height: 100%; }
+.art { overflow: visible; stroke-width: 1.25; }
+.art * { vector-effect: non-scaling-stroke; }
+
+/* Bubble outline for keyboard focus (the pointer gets the live bubble, drawn on the canvas) */
+.loop {
+  position: absolute; left: 50%; top: 50%;
+  width: calc(var(--w) * 2); height: calc(var(--w) * 2);
+  transform: translate(-50%, -50%);
+  overflow: visible; pointer-events: none;
+}
+.loop .rim {
+  fill: none; stroke: url(#toon); stroke-width: calc(var(--lw, .6) * 1.4); stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1 1; stroke-dashoffset: 1; opacity: 0;
+  transition: opacity .22s ease, stroke-dashoffset 0s linear .24s;
+}
+.loop .film { fill: url(#film); opacity: 0; transition: opacity .2s; }
+.loop .glint { fill: none; stroke: #fff; stroke-width: calc(var(--lw, .6) * 3.6); stroke-linecap: round; opacity: 0; transition: opacity .2s; }
+.loop .dot { fill: #fff; opacity: 0; transition: opacity .2s; }
+.card:focus-visible + .loop .rim, html:not(.bubble-cursor) .card:hover + .loop .rim {
+  opacity: 1; stroke-dashoffset: 0;
+  transition: opacity .06s, stroke-dashoffset .9s cubic-bezier(.55, 0, .25, 1);
+}
+.card:focus-visible + .loop .film, html:not(.bubble-cursor) .card:hover + .loop .film,
+.card:focus-visible + .loop .glint, html:not(.bubble-cursor) .card:hover + .loop .glint,
+.card:focus-visible + .loop .dot, html:not(.bubble-cursor) .card:hover + .loop .dot {
+  opacity: .95; transition: opacity .4s .7s;
+}
+.slot.hover .loop { visibility: hidden; }
+
+/* Landing: the statement and a cue to scroll */
+.hero {
+  position: absolute; z-index: 3; pointer-events: none;
+  left: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad)));
+  top: calc(var(--hh) + clamp(10px, 3.2vh, 40px));
+  width: min(600px, calc(100% - 2 * var(--pad)));
+}
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.625rem, 3.1vw, 2.9rem); line-height: 1.1;
+  font-weight: 600; letter-spacing: -.04em; text-wrap: balance;
+}
+.hint {
+  position: absolute; z-index: 3; pointer-events: none;
+  left: 50%; bottom: clamp(20px, 5vh, 52px); transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  font-size: 13px; color: var(--ink-2); white-space: nowrap;
+}
+.hint i { position: relative; width: 11px; height: 44px; }
+.hint i::before { content: ''; position: absolute; left: 5px; top: 0; bottom: 0; width: 1px; background: linear-gradient(var(--ink-2), transparent); opacity: .5; }
+.hint i::after {
+  content: ''; position: absolute; left: 1px; top: 0; width: 9px; height: 9px; border-radius: 50%;
+  border: 1px solid var(--ink-2);
+  background: radial-gradient(circle at 32% 30%, rgb(255 255 255 / .9) 0 1.5px, transparent 2.5px);
+  animation: sink 2.2s cubic-bezier(.45, 0, .55, 1) infinite;
+}
+@keyframes sink { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(36px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .hint i::after { animation: none; opacity: 1; } }
+
+/* Credits, top left */
+.credits {
+  position: absolute; z-index: 3; pointer-events: none;
+  left: max(var(--pad), calc((100% - var(--max)) / 2 + var(--pad)));
+  top: calc(var(--hh) + clamp(10px, 3.2vh, 40px));
+  width: min(350px, 60vw);
+}
+.cr-title {
+  margin: 0 0 14px;
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem); line-height: 1.05;
+  font-weight: 600; letter-spacing: -.04em; text-wrap: balance;
+}
+.cr-rows { margin: 0; border-top: 1px solid var(--ink); }
+.cr-rows div {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 7px 0; border-bottom: 1px solid var(--line);
+  font-size: 13px; line-height: 1.4;
+}
+.cr-rows dt { color: var(--ink-2); flex: none; }
+.cr-rows dd { margin: 0; text-align: right; }
+
+/* Highlights, bottom centre */
+.quotes {
+  position: absolute; z-index: 3; pointer-events: none;
+  left: 50%; bottom: clamp(20px, 5vh, 52px);
+  width: min(640px, calc(100% - 2 * var(--pad)));
+  transform: translateX(-50%);
+}
+.q-in { display: flex; justify-content: center; gap: clamp(24px, 4.5vw, 64px); text-align: center; }
+.q { margin: 0; flex: 1 1 0; max-width: 260px; }
+.q.wide { max-width: 32em; flex: none; }
+.q-fig {
+  display: block;
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem); line-height: 1;
+  font-weight: 600; letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.q-text { display: block; margin-top: 10px; font-size: 14px; line-height: 1.45; color: var(--ink-2); text-wrap: balance; }
+.q.wide .q-text { margin-top: 0; font-size: 16px; color: var(--ink); }
+
+@media (max-width: 699px) {
+  .cr-title { margin-bottom: 10px; }
+  .cr-rows div { font-size: 12.5px; padding: 5px 0; }
+  .q-text { font-size: 12.5px; }
+  .q.wide .q-text { font-size: 14px; }
+}
+
+.js-intro .slot, .js-intro .credits, .js-intro .quotes, .js-intro .hero, .js-intro .hint { opacity: 0; }
+
+/* About and contact */
+.about { padding-top: clamp(96px, 12vw, 168px); }
+.about-grid { display: grid; gap: 28px; }
+@media (min-width: 900px) { .about-grid { grid-template-columns: 5fr 7fr; gap: 64px; } }
+.big {
+  margin: 0;
+  font-size: clamp(2rem, 4.4vw, 3.6rem); line-height: 1.02;
+  font-weight: 600; letter-spacing: -.045em;
+}
+.about-text p {
+  margin: 0 0 1em;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.6;
+  max-width: 34em; text-wrap: pretty;
+}
+.facts {
+  margin: clamp(48px, 7vw, 88px) 0 0; padding-top: 28px;
+  border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px 40px;
+}
+.facts dt { font-size: 14px; color: var(--ink-2); margin-bottom: 6px; }
+.facts dd { margin: 0; font-size: 15px; line-height: 1.6; }
+
+.contact { padding-block: clamp(96px, 14vw, 184px) clamp(64px, 9vw, 128px); }
+.mail {
+  display: inline-block; margin-top: clamp(20px, 3vw, 32px);
+  font-size: clamp(1.5rem, 4.6vw, 3.25rem); font-weight: 500; letter-spacing: -.035em;
+  color: var(--ink);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .16em;
+  text-decoration-color: var(--line);
+  transition: text-decoration-color .2s;
+  overflow-wrap: anywhere;
+}
+.mail:hover { text-decoration-color: currentColor; }
+.links { display: flex; flex-wrap: wrap; gap: 4px 28px; margin-top: 20px; }
+.links a { color: var(--ink-2); text-decoration: none; padding-block: 10px; transition: color .2s; }
+.links a:hover { color: var(--ink); }
+
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* "Redesign it yourself": a prompt bar that leads to a human */
+@property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.ask { padding-top: clamp(96px, 12vw, 168px); text-align: center; }
+.ask-sub { margin: 16px auto 0; color: var(--ink-2); font-size: clamp(1rem, 1.4vw, 1.125rem); max-width: 32em; text-wrap: balance; }
+.ask-bar {
+  position: relative; display: flex; align-items: flex-end; gap: 10px;
+  max-width: 720px; margin: clamp(28px, 4vw, 44px) auto 0; padding: 9px 9px 9px 18px;
+  border-radius: 31px; text-align: left;
+  background: color-mix(in oklab, var(--ground) 70%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 24px 50px -28px rgb(0 0 0 / .3);
+}
+.ask-bar::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: conic-gradient(from var(--a), var(--i1), var(--i2), var(--i3), var(--i4), var(--i5), var(--i1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: .7; animation: spin 9s linear infinite;
+}
+.ask-bar:focus-within::before { opacity: 1; }
+.ask-bar.thinking::before { opacity: 1; animation-duration: 1.1s; }
+@keyframes spin { to { --a: 360deg; } }
+.ask-spark { flex: none; width: 20px; height: 20px; margin-bottom: 12px; color: var(--ink-2); }
+.ask-bar.thinking .ask-spark { color: var(--i5); }
+.ask-input {
+  flex: 1; min-width: 0; max-height: 160px; resize: none; border: 0; background: none; outline: none;
+  font: inherit; font-size: 17px; line-height: 1.5; color: var(--ink); padding: 9px 0; margin: 0;
+}
+.ask-input::placeholder { color: var(--ink-2); opacity: .85; }
+.ask-send {
+  flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; padding: 0;
+  display: grid; place-items: center; cursor: pointer;
+  background: var(--ink); color: var(--ground);
+  transition: opacity .2s, transform .25s var(--ease);
+}
+.ask-send:hover:not(:disabled) { transform: scale(1.06); }
+.ask-send:disabled { opacity: .3; cursor: default; }
+.ask-bar.thinking .ask-send { opacity: 1; }
+.ask-bar.thinking .ask-send svg { display: none; }
+.ask-bar.thinking .ask-send::after {
+  content: ''; width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid currentColor; border-right-color: transparent;
+  animation: turn .7s linear infinite;
+}
+@keyframes turn { to { rotate: 360deg; } }
+.ask-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 16px auto 0; max-width: 720px; }
+.chip {
+  padding: 9px 15px; border-radius: 999px; border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--ground) 55%, transparent);
+  font: inherit; font-size: 14px; color: var(--ink-2); cursor: pointer;
+  transition: color .2s, background-color .2s, border-color .2s;
+}
+.chip:hover { color: var(--ink); background: color-mix(in oklab, var(--ground) 85%, transparent); border-color: color-mix(in oklab, var(--ink) 25%, transparent); }
+.ask-status { min-height: 1.5em; margin: 16px 0 0; font-size: 14px; color: var(--ink-2); }
+.ask-status.shimmer {
+  background: linear-gradient(90deg, var(--ink-2) 0 35%, var(--i5) 45%, var(--i1) 55%, var(--ink-2) 65% 100%);
+  background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+.ask-modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 20px; }
+.ask-modal[hidden] { display: none; }
+.ask-scrim { position: absolute; inset: 0; background: var(--scrim); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.ask-card {
+  position: relative; width: min(480px, 100%); padding: 40px 32px 28px; border-radius: 30px; text-align: center;
+  background: color-mix(in oklab, var(--ground) 90%, transparent);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 40px 90px -40px rgb(0 0 0 / .55);
+}
+.ask-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: conic-gradient(from 200deg, var(--i1), var(--i2), var(--i3), var(--i4), var(--i5), var(--i1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: .7;
+}
+.am-bubble { display: block; width: 104px; height: 96px; margin: 0 auto 18px; overflow: visible; transform-origin: 50% 85%; animation: jelly 2.6s ease-in-out infinite; }
+@keyframes jelly { 0%, 100% { transform: scale(1, 1); } 25% { transform: scale(1.05, .95); } 50% { transform: scale(.97, 1.03); } 75% { transform: scale(1.02, .98); } }
+.am-dots circle { fill: var(--ink-2); animation: blink 1.2s ease-in-out infinite; }
+.am-dots circle:nth-child(2) { animation-delay: .15s; }
+.am-dots circle:nth-child(3) { animation-delay: .3s; }
+@keyframes blink { 0%, 60%, 100% { opacity: .25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-2px); } }
+@media (prefers-reduced-motion: reduce) { .am-bubble, .am-dots circle, .ask-bar::before, .ask-status.shimmer { animation: none; } }
+.am-title { margin: 0; font-size: clamp(1.375rem, 3vw, 1.875rem); line-height: 1.15; font-weight: 600; letter-spacing: -.035em; text-wrap: balance; }
+.am-body { margin: 14px auto 0; color: var(--ink-2); max-width: 30em; text-wrap: pretty; }
+.am-body q { color: var(--ink); overflow-wrap: anywhere; }
+.am-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+.am-actions button {
+  min-height: 44px; padding: 12px 22px; border: 0; border-radius: 999px;
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: transform .25s var(--ease), background-color .2s;
+}
+.am-primary { background: var(--ink); color: var(--ground); }
+.am-secondary { background: color-mix(in oklab, var(--ink) 8%, transparent); color: var(--ink); }
+.am-actions button:hover { transform: translateY(-1px); }
+.am-close {
+  position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; border: 0; padding: 0;
+  display: grid; place-items: center; cursor: pointer; color: var(--ink);
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+/* Detail sheet */
+.sheet { position: fixed; inset: 0; z-index: 50; }
+.sheet[hidden] { display: none; }
+.scrim { position: absolute; inset: 0; background: var(--scrim); }
+.flipper {
+  position: fixed; top: 0; left: 0;
+  transform-style: preserve-3d;
+  --sheet-bg: color-mix(in oklab, var(--c) 52%, #ffffff);
+  --sheet-ink: #1D1D1F;
+  --sheet-ink-2: var(--d);
+  --sheet-art: var(--d);
+  --sheet-line: color-mix(in oklab, var(--d) 24%, transparent);
+  transition: --c .45s ease, --d .45s ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .flipper {
+    --sheet-bg: color-mix(in oklab, var(--d) 36%, #17181a);
+    --sheet-ink: #F2F2F4;
+    --sheet-ink-2: var(--c);
+    --sheet-art: var(--c);
+    --sheet-line: color-mix(in oklab, var(--c) 22%, transparent);
+  }
+}
+.probe, .flipper.settled {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + clamp(8px, 1.6vw, 24px));
+  bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(8px, 1.6vw, 24px));
+  left: max(clamp(8px, 1.6vw, 24px), calc(50vw - 740px));
+  right: max(clamp(8px, 1.6vw, 24px), calc(50vw - 740px));
+}
+.probe { visibility: hidden; pointer-events: none; z-index: -1; }
+.flipper.settled { transform: none; }
+.face { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; overflow: hidden; border-radius: 28px; }
+.back { transform: rotateY(180deg); background: var(--sheet-bg); color: var(--sheet-ink); box-shadow: 0 40px 90px -40px rgb(0 0 0 / .5); }
+.flipper.settled .back { transform: none; }
+.flipper.settled .front { display: none; }
+.sheet-scroll { position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain; }
+.flipper.animating .sheet-scroll { inset: auto; left: 50%; top: 50%; transform: translate(-50%, -50%); overflow: hidden; }
+.close {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  width: 44px; height: 44px; border-radius: 50%; border: 0; padding: 0;
+  display: grid; place-items: center; cursor: pointer;
+  color: var(--sheet-ink);
+  background: color-mix(in oklab, var(--sheet-ink) 8%, var(--sheet-bg));
+  transition: background-color .2s;
+}
+.close:hover { background: color-mix(in oklab, var(--sheet-ink) 15%, var(--sheet-bg)); }
+.close:focus-visible, .sh-nav button:focus-visible { outline-color: var(--sheet-ink); }
+.sheet-inner { max-width: 1080px; margin: 0 auto; padding: clamp(72px, 9vw, 112px) clamp(24px, 6vw, 80px) 24px; transform-origin: 50% 30%; }
+.sh-head { display: grid; gap: 28px; align-items: end; }
+@media (min-width: 860px) { .sh-head { grid-template-columns: 1fr minmax(220px, 36%); } }
+.sh-period { margin: 0 0 14px; font-size: 15px; color: var(--sheet-ink-2); font-variant-numeric: tabular-nums; }
+.sh-title {
+  margin: 0;
+  font-size: clamp(2.5rem, 7.2vw, 5.75rem); line-height: .98;
+  font-weight: 600; letter-spacing: -.05em; text-wrap: balance;
+}
+.sh-title:focus { outline: none; }
+.sh-role { margin: 16px 0 0; font-size: clamp(1.125rem, 1.9vw, 1.5rem); line-height: 1.3; color: var(--sheet-ink-2); letter-spacing: -.01em; }
+.sh-art { color: var(--sheet-art); width: 100%; max-width: 380px; justify-self: end; }
+.sh-art .art { display: block; width: 100%; height: auto; stroke-width: 1.5; }
+@media (max-width: 859px) { .sh-art { order: -1; justify-self: start; max-width: 190px; } }
+.sh-lede { margin: clamp(36px, 5vw, 56px) 0 0; font-size: clamp(1.0625rem, 1.7vw, 1.375rem); line-height: 1.55; max-width: 32em; text-wrap: pretty; }
+.sh-metrics {
+  list-style: none; padding: 0; margin: clamp(40px, 6vw, 72px) 0 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 32px clamp(24px, 4vw, 48px);
+}
+.sh-metrics li { border-top: 1px solid var(--sheet-line); padding-top: 18px; }
+.sh-fig {
+  display: block;
+  font-size: clamp(2.125rem, 4.4vw, 3.375rem); line-height: 1;
+  font-weight: 600; letter-spacing: -.045em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.sh-cap { display: block; margin-top: 12px; font-size: 15px; line-height: 1.5; color: var(--sheet-ink-2); max-width: 28ch; }
+.sh-block { margin-top: clamp(40px, 6vw, 72px); max-width: 44em; }
+.sh-block h3 { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
+.sh-list { list-style: none; padding: 0; margin: 0; }
+.sh-list li { padding: 14px 0; border-bottom: 1px solid var(--sheet-line); line-height: 1.55; font-size: 15px; }
+.sh-cases h3, .sh-why h3 { margin-bottom: 8px; }
+.sh-case { display: grid; gap: 6px 40px; padding: 20px 0; border-top: 1px solid var(--sheet-line); }
+.sh-case:last-child { border-bottom: 1px solid var(--sheet-line); }
+@media (min-width: 860px) { .sh-case { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); } }
+.sh-case h4 { margin: 0; font-size: 17px; line-height: 1.35; font-weight: 600; letter-spacing: -.015em; text-wrap: balance; }
+.sh-case p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--sheet-ink); text-wrap: pretty; }
+.sh-why p { margin: 0; font-size: clamp(1.0625rem, 1.6vw, 1.25rem); line-height: 1.6; max-width: 34em; text-wrap: pretty; }
+.sh-nav { max-width: 1080px; margin: 0 auto; padding: clamp(32px, 5vw, 56px) clamp(24px, 6vw, 80px) clamp(28px, 5vw, 56px); display: flex; gap: 12px; }
+.sh-nav button {
+  display: flex; align-items: center; gap: 14px;
+  max-width: 48%; min-height: 44px; padding: 14px 20px; border: 0; border-radius: 18px;
+  background: color-mix(in oklab, var(--sheet-ink) 6%, transparent);
+  color: var(--sheet-ink); font: inherit; text-align: left; cursor: pointer;
+  transition: background-color .2s;
+}
+.sh-nav button:hover { background: color-mix(in oklab, var(--sheet-ink) 11%, transparent); }
+.sh-nav button[hidden] { display: none; }
+.sh-nav .next { margin-left: auto; text-align: right; }
+.nav-small { display: block; font-size: 13px; color: var(--sheet-ink-2); }
+.nav-name { display: block; font-weight: 600; }
+.sh-nav svg { flex: none; }
+
+/* Bubble cursor */
+#fx { position: fixed; inset: 0; z-index: 100; pointer-events: none; display: none; }
+#fx.on { display: block; }
+#cursor-label { position: fixed; left: 0; top: 0; z-index: 101; pointer-events: none; will-change: transform; }
+#cursor-label span {
+  display: block; padding: 7px 12px; border-radius: 999px;
+  background: var(--ink); color: var(--ground);
+  font-size: 13px; line-height: 1.2; font-weight: 500; white-space: nowrap;
+  opacity: 0; transform: scale(.7); transform-origin: 0 50%;
+  transition: opacity .18s ease, transform .35s var(--ease);
+}
+#cursor-label.left span { transform-origin: 100% 50%; }
+#cursor-label.on span { opacity: 1; transform: scale(1); }
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i><i class="b5" id="tint"></i></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="iris" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" style="stop-color: var(--i1)"/>
+      <stop offset=".25" style="stop-color: var(--i2)"/>
+      <stop offset=".5" style="stop-color: var(--i3)"/>
+      <stop offset=".75" style="stop-color: var(--i4)"/>
+      <stop offset="1" style="stop-color: var(--i5)"/>
+    </linearGradient>
+    <linearGradient id="toon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8C9BFF"/>
+      <stop offset=".35" stop-color="#FF8FC6"/>
+      <stop offset=".7" stop-color="#7FD8F2"/>
+      <stop offset="1" stop-color="#B79CFF"/>
+    </linearGradient>
+    <linearGradient id="film" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFBEE4" stop-opacity=".3"/>
+      <stop offset=".5" stop-color="#CDE1FF" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#B4F0E1" stop-opacity=".3"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="page" id="page">
+  <header class="top" id="top">
+    <div class="top-in wrap">
+      <a class="name" href="#">Soline Pignal</a>
+      <nav class="nav" aria-label="Main">
+        <button class="nav-btn" id="index-btn" type="button" aria-expanded="false" aria-controls="index">
+          Index
+          <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="index" id="index" role="region" aria-label="All experiences" hidden>
+        <ol class="ix-list" id="ix-list"></ol>
+      </div>
+    </div>
+  </header>
+
+  <section class="crate" id="work" aria-label="Experience, most recent first">
+    <div class="pin" id="pin">
+      <div class="hero" id="hero"><h1>Product designer for complex tools and the people who use them.</h1></div>
+      <ol class="row" id="row"></ol>
+      <div class="credits" id="credits" aria-hidden="true"><div id="cr-in"></div></div>
+      <div class="quotes" id="quotes" aria-hidden="true"><div class="q-in" id="q-in"></div></div>
+      <p class="hint" id="hint" aria-hidden="true"><span id="hint-txt">Scroll to explore</span><i></i></p>
+    </div>
+  </section>
+
+  <section class="about wrap" id="about">
+    <div class="about-grid">
+      <h2 class="big">Hey, I’m Soline.</h2>
+      <div class="about-text">
+        <p>From care planning to cybersecurity to 3D for architects, I turn dense software into something people understand and own.</p>
+        <p>I’m insatiably curious. Complex subjects keep me on my feet: I need to understand, so I’m always investigating something, somewhere, for someone. My sweet spot is making that complexity easy to grasp, with clear workflows and UI patterns, or with diagrams and analogies. And I love running workshops with my peers: sketching together often gets a team further than another meeting.</p>
+        <p>I believe in wonderment. Putting as much of it as I can into everything I make is my core mission as a designer.</p>
+      </div>
+    </div>
+    <dl class="facts">
+      <div>
+        <dt>Background</dt>
+        <dd>Bicultural French and English, with 18 years in London. Strate School of Design, 2015. Bac ES with honours, Lycée Français Charles de Gaulle, London.</dd>
+      </div>
+      <div>
+        <dt>Giving back</dt>
+        <dd>Two years facilitating “Journées jeunes pros” at CY School of Design. Two years of weekends with children with special needs at ABO.</dd>
+      </div>
+      <div>
+        <dt>Tools</dt>
+        <dd>Figma, FigJam, Adobe Suite, Notion. Claude and Gemini every day, and learning to ship code with Claude Code.</dd>
+      </div>
+      <div>
+        <dt>Off screen</dt>
+        <dd>Amateur triathlete. Ballet, piano and many crafts.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="ask wrap" id="ask" aria-labelledby="ask-title">
+    <h2 class="big" id="ask-title">Redesign it yourself.</h2>
+    <p class="ask-sub">Describe a change and the portfolio rewrites itself.</p>
+    <form class="ask-bar" id="ask-form" autocomplete="off">
+      <label class="vh" for="ask-input">Describe a change to this portfolio</label>
+      <svg class="ask-spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 2.5l1.9 6.1 6.1 1.9-6.1 1.9L11 18.5l-1.9-6.1L3 10.5l6.1-1.9z" fill="currentColor"/><path d="M19 14.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z" fill="currentColor"/></svg>
+      <textarea class="ask-input" id="ask-input" rows="1" placeholder="Describe a change…"></textarea>
+      <button class="ask-send" id="ask-send" type="submit" aria-label="Send" disabled>
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 15V3M3.5 8.5L9 3l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+    <div class="ask-chips">
+      <button class="chip" type="button">Make it dark</button>
+      <button class="chip" type="button">Turn the cards into planets</button>
+      <button class="chip" type="button">Show only UX work</button>
+    </div>
+    <p class="ask-status" id="ask-status" aria-live="polite"></p>
+  </section>
+
+  <section class="contact wrap" id="contact">
+    <h2 class="big">Let’s talk.</h2>
+    <a class="mail" href="mailto:soline@pignal.com">soline@pignal.com</a>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/soline-pignal/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://star-ptarmigan-b65.notion.site/50e26c9bae6b4dc19cfb78d2b027a03a" target="_blank" rel="noopener">CV</a>
+    </div>
+  </section>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="scrim" id="scrim"></div>
+  <div class="flipper" id="flipper" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="face front cardlike" id="front" aria-hidden="true"></div>
+    <div class="face back" id="back">
+      <div class="sheet-scroll" id="sheet-scroll">
+        <div class="sheet-inner" id="sheet-inner"></div>
+        <nav class="sh-nav" aria-label="Other experiences">
+          <button class="prev" id="prev" type="button">
+            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2L2 8l6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><span class="nav-small">Later</span><span class="nav-name"></span></span>
+          </button>
+          <button class="next" id="next" type="button">
+            <span><span class="nav-small">Earlier</span><span class="nav-name"></span></span>
+            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </nav>
+      </div>
+      <button class="close" id="close" type="button" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 1.5l11 11M12.5 1.5l-11 11" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="ask-modal" id="ask-modal" hidden>
+  <div class="ask-scrim" id="ask-scrim"></div>
+  <div class="ask-card" id="ask-card" role="dialog" aria-modal="true" aria-labelledby="am-title" aria-describedby="am-body">
+    <svg class="am-bubble" viewBox="0 0 104 96" aria-hidden="true" focusable="false">
+      <path d="M52 6C76 6 94 22 94 44S76 82 52 82c-6 0-11.5-1-16.5-2.8L18 90l4.2-16.4C14.6 66 10 55.6 10 44 10 22 28 6 52 6z" fill="url(#film)" stroke="url(#toon)" stroke-width="3.2" stroke-linejoin="round"/>
+      <path d="M26 30c3.5-7 10-12 18-14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="51" cy="14.5" r="2.6" fill="#fff"/>
+      <g class="am-dots"><circle cx="38" cy="45" r="4.2"/><circle cx="52" cy="45" r="4.2"/><circle cx="66" cy="45" r="4.2"/></g>
+    </svg>
+    <h2 class="am-title" id="am-title">Why use AI when you can ask a human?</h2>
+    <p class="am-body" id="am-body">I use AI throughout my design process. Let’s talk.</p>
+    <div class="am-actions">
+      <button class="am-primary" id="am-contact" type="button">Contact me</button>
+      <button class="am-secondary" id="am-copy" type="button">Copy my email</button>
+    </div>
+    <button class="am-close" id="am-close" type="button" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 1.5l11 11M12.5 1.5l-11 11" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+<div class="probe" id="probe" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div id="cursor-label" aria-hidden="true"><span></span></div>
+
+<script>
+(() => {
+  const WORK = [
+    {
+      id: 'hopia', title: 'Hopia', year: '2025', period: '2025 – now',
+      role: 'Founding designer', field: 'AI planning for care teams',
+      art: 'hopia', c: '#F4CFC9', d: '#8C2F28',
+      quotes: [['4–5 h', 'planning time every two months, down from 24–32 h'], ['−42%', 'temp-agency hours at one care facility in six months']],
+      lede: 'Hopia makes AI planning software for care teams in care facilities. I joined as its founding designer to bring user-centred design into the product and into the way the company works, from discovery to delivery.',
+      metrics: [
+        ['4–5 h', 'Planning time every two months, down from 24–32 h, after the planning redesign.'],
+        ['−42%', 'Hours of temp-agency calls at one care facility, September 2025 to March 2026, after the shift-exchange redesign.'],
+        ['3×', 'Teams using the product, after the move into a new care-team segment.']
+      ],
+      cases: [
+        ['Planning, rebuilt around the people who make it', 'Care managers were spending 24 to 32 hours every two months building schedules. We redesigned the planning experience so teams actually adopt it, and brought that down to 4 to 5 hours: time that goes back to patient care.'],
+        ['Shift exchange before the temp agency', 'Covering a missing shift often meant calling a temp agency. We redesigned shift exchange so colleagues can swap and cover shifts within their own team, which also supports Hopia’s upsell. At one care facility, hours of temp-agency calls fell by 42% between September 2025 and March 2026.'],
+        ['A new kind of care team', 'When Hopia opened up to a new care-team segment, I redesigned key flows for these new personas and their needs. The product now reaches three times as many teams.']
+      ],
+      did: ['Founding designer, from discovery to delivery.', 'Redesigning the product for new personas and market needs.', 'Setting up the team’s product and design rituals.', 'Structuring a small product team.'],
+      why: 'Health and prevention are personal to me: I see too many burnouts among friends and teammates. At Hopia, I help carers get time back to actually care. And I get to turn the people this tool is built for into actors of it, rather than users of something opaque.'
+    },
+    {
+      id: 'interior', title: 'Interior design', year: '2024', period: '2024 – now',
+      role: 'Designer, from brief to site', field: 'Residential renovation, Paris',
+      art: 'interior', c: '#E8DAC3', d: '#6A4E25',
+      quotes: [[null, 'A full renovation in Paris, from the first measurements to site supervision.']],
+      lede: 'A one-year interior design course in France, then a full renovation in Paris that I’m running from the first measurements to site supervision. It finishes soon. Same craft, different material: a brief, hard constraints and a deadline where every decision becomes real.',
+      did: ['Client brief, measurements and condition report.', 'Zoning, then preliminary and detailed design (APS, APD).', 'Technical drawings, including electrical plans.', 'Moodboards and visualisations.', 'Site supervision.']
+    },
+    {
+      id: 'ct-square', title: 'CT-Square', year: '2023', period: '2023, six months',
+      role: 'Founding designer & acting PM', field: 'Cybersecurity monitoring',
+      art: 'ctsquare', c: '#CCDDF3', d: '#1E4C8A',
+      quotes: [['2 → 1', 'internal tools unified into one cybersecurity portal'], ['15+', 'people in the tech team introduced to design practices']],
+      lede: 'Two missions on a cybersecurity monitoring platform, as founding designer and acting product manager: full discovery from scratch, then high-fidelity UI and a design system.',
+      metrics: [['2 → 1', 'Internal tools unified into one coherent cybersecurity portal.'], ['15+', 'People in the tech team I introduced to design practices.']],
+      did: ['Ran the full discovery from scratch.', 'Designed the high-fidelity UI and built the design system.', 'Gave sales clearer materials to explain the offering.']
+    },
+    {
+      id: 'unity', title: 'Unity', year: '2020', period: '2020 – 2023',
+      role: 'Product designer', field: '3D and VR for architects',
+      art: 'unity', c: '#D9D2F2', d: '#4A3896',
+      quotes: [[null, 'Led design on shipped features of a BIM design-review tool, and helped designers own user interviews.']],
+      lede: 'Three years as a full-scope product designer, from research to delivery, on 3D and VR software for architects working with BIM.',
+      did: ['Aligned the Digital Twin team around a shared vision for portal data preparation, making complex workflows easy to follow for non-coders.', 'Led design on several shipped features of the BIM design-review tool.', 'Helped designers own user interviews, which only PMs had run before.']
+    },
+    {
+      id: 'frog', title: 'Hiveworks & frog', year: '2019', period: '2019, one year',
+      role: 'Service design intern', field: 'Service design, Madrid',
+      art: 'workshop', c: '#F5DE9F', d: '#6E5000',
+      quotes: [[null, 'UX research, workshops and design sprints for Sosh and Orange Digital.']],
+      lede: 'A year in Madrid learning service design with Hiveworks and AltranID / frog: UX research, workshops and design sprints for Sosh and Orange Digital.'
+    },
+    {
+      id: 'pgnl', title: 'PGNL.', year: '2017', period: '2017 – now',
+      role: 'Freelance designer', field: 'Brands, products, decks',
+      art: 'pgnl', c: '#C9E8D8', d: '#1D6545',
+      quotes: [[null, 'UX/UI, branding and logos, pitch decks and infographics.']],
+      lede: 'My independent practice, alongside everything else: UX/UI, branding and logos, pitch decks and infographics.'
+    },
+    {
+      id: 'strate', title: 'Strate School of Design', short: 'Strate', year: '2015', period: 'Class of 2015',
+      role: 'Graduate, highest distinction', field: 'Interaction design',
+      art: 'book', c: '#DADCE0', d: '#3A3C42',
+      quotes: [[null, 'My final project, HYme Book, won the jury’s Coup de cœur.']],
+      lede: 'Where it started. I graduated in interaction design with the highest distinction, and my final project, HYme Book, received the jury’s Coup de cœur.'
+    }
+  ];
+
+  /* Line drawings: one small diagram of each domain */
+  const ART = {
+    hopia() {
+      let g = '';
+      for (let c = 0; c <= 5; c++) g += `<path d="M${10 + 20 * c} 12V78"/>`;
+      for (let r = 0; r <= 4; r++) g += `<path d="M10 ${12 + 16.5 * r}H110"/>`;
+      const cell = (c, r, o) => `<rect x="${12 + 20 * c}" y="${14 + 16.5 * r}" width="16" height="12.5" rx="2.5" fill="currentColor" fill-opacity="${o}" stroke="none"/>`;
+      let s = `<g stroke-opacity=".35">${g}</g>`;
+      [[0, 0], [2, 0], [4, 1], [0, 2], [1, 3], [3, 3], [4, 3]].forEach(([c, r]) => { s += cell(c, r, .2); });
+      s += cell(1, 1, .85) + cell(3, 2, .85);
+      s += '<path d="M49 36.75C60 36.75 60 53.25 71 53.25"/><path d="M67.5 50.5L71 53.25L67.5 56"/><path d="M52.5 34L49 36.75L52.5 39.5"/>';
+      return s;
+    },
+    interior() {
+      return '<rect x="12" y="10" width="96" height="68" rx="1.5"/>' +
+        '<rect x="15.5" y="13.5" width="89" height="61" rx="1" stroke-opacity=".35"/>' +
+        '<path d="M60 13.5V46M60 60V74.5"/><path d="M60 46H74"/>' +
+        '<path d="M74 46A14 14 0 0 1 60 60" stroke-opacity=".55" stroke-dasharray="2 2.5"/>' +
+        '<rect x="26" y="8.5" width="22" height="6.5" rx="1" fill="currentColor" fill-opacity=".2" stroke="none"/>' +
+        '<path d="M26 11.75H48" stroke-opacity=".7"/>' +
+        '<rect x="22" y="52" width="28" height="15" rx="3.5" fill="currentColor" fill-opacity=".2" stroke="none"/>' +
+        '<path d="M22 57H50" stroke-opacity=".35"/>' +
+        '<circle cx="86" cy="30" r="9" fill="currentColor" fill-opacity=".2" stroke="none"/>' +
+        '<path d="M12 85H108M12 82.5V87.5M108 82.5V87.5" stroke-opacity=".5"/>';
+    },
+    ctsquare() {
+      const P = [[20, 28], [44, 15], [70, 26], [99, 14], [32, 50], [60, 47], [92, 44]];
+      const L = [[0, 1], [1, 2], [2, 3], [0, 4], [4, 5], [5, 2], [5, 6], [6, 3], [2, 6]];
+      let s = `<g stroke-opacity=".4">${L.map(([a, b]) => `<path d="M${P[a][0]} ${P[a][1]}L${P[b][0]} ${P[b][1]}"/>`).join('')}</g>`;
+      P.forEach(([x, y], i) => { if (i !== 2) s += `<circle cx="${x}" cy="${y}" r="2.8" fill="currentColor" stroke="none"/>`; });
+      s += '<circle cx="70" cy="26" r="8" stroke-opacity=".45"/><circle cx="70" cy="26" r="3.8" fill="currentColor" stroke="none"/>';
+      s += '<path d="M10 72H40L45 72L50 61L56 82L61 66L65 72H110"/>';
+      return s;
+    },
+    unity() {
+      return '<path d="M12 60L60 84L108 60" stroke-opacity=".4"/>' +
+        '<path d="M12 60L60 36L108 60" stroke-opacity=".25" stroke-dasharray="2 3"/>' +
+        '<path d="M32 58L60 44L88 58M60 44V12" stroke-opacity=".3" stroke-dasharray="2 3"/>' +
+        '<path d="M32 26L60 12L88 26L60 40Z" fill="currentColor" fill-opacity=".2"/>' +
+        '<path d="M32 26V58L60 72V40M88 26V58L60 72"/>' +
+        '<path d="M32 47.3L60 61.3L88 47.3M32 36.7L60 50.7L88 36.7" stroke-opacity=".45"/>';
+    },
+    workshop() {
+      const note = (x, y, r, o) => `<rect x="${x}" y="${y}" width="18" height="18" rx="1.5" transform="rotate(${r} ${x + 9} ${y + 9})" fill="currentColor" fill-opacity="${o}"/>`;
+      return '<rect x="9" y="7" width="56" height="54" rx="12" stroke-opacity=".45" stroke-dasharray="2.5 3"/>' +
+        note(16, 14, -5, .2) + note(39, 12, 4, .2) + note(27, 36, 2, .2) +
+        '<path d="M65 34C70 34 70 27 75 27" stroke-opacity=".45"/>' +
+        note(76, 16, -3, .2) + note(95, 29, 6, .2) + note(79, 44, -4, .2) +
+        note(47, 66, 5, .85);
+    },
+    pgnl() {
+      return '<path d="M6 45H114M46 6V84" stroke-opacity=".3" stroke-dasharray="2 3"/>' +
+        '<circle cx="46" cy="45" r="27"/>' +
+        '<rect x="52" y="24" width="42" height="42" fill="currentColor" fill-opacity=".2"/>' +
+        '<path d="M63 24L84 14" stroke-opacity=".6"/>' +
+        '<circle cx="84" cy="14" r="2.4" fill="currentColor" stroke="none"/>' +
+        '<rect x="61.5" y="22.5" width="3" height="3" fill="currentColor" stroke="none"/>' +
+        '<rect x="61.5" y="64.5" width="3" height="3" fill="currentColor" stroke="none"/>' +
+        '<circle cx="46" cy="45" r="1.6" fill="currentColor" stroke="none"/>';
+    },
+    book() {
+      return '<path d="M60 7L61.6 11.4L66 13L61.6 14.6L60 19L58.4 14.6L54 13L58.4 11.4Z" fill="currentColor" stroke="none"/>' +
+        '<path d="M60 30C48 23 30 22 14 26V74C30 70 48 71 60 78Z"/>' +
+        '<path d="M60 30C72 23 90 22 106 26V74C90 70 72 71 60 78Z" fill="currentColor" fill-opacity=".2"/>' +
+        '<path d="M22 38H51M22 45H51M22 52H46M22 59H51M22 66H40" stroke-opacity=".45"/>' +
+        '<circle cx="80" cy="48" r="10" stroke-opacity=".7"/>' +
+        '<path d="M85 52V65L88.6 61.8L91.2 67.4L93.6 66.4L91 60.8L95.8 60.6Z" fill="currentColor" stroke="none"/>';
+    }
+  };
+
+  const svg = (inner) => `<svg class="art" viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${inner}</svg>`;
+  const faceHTML = (w) => `<span class="cf-name">${w.short || w.title}</span><span class="cf-year" aria-hidden="true">${w.year}</span><span class="cf-art">${svg(ART[w.art]())}</span>`;
+  const credHTML = (w) => `<p class="cr-title">${w.title}</p><dl class="cr-rows"><div><dt>Role</dt><dd>${w.role}</dd></div><div><dt>Period</dt><dd>${w.period}</dd></div><div><dt>Field</dt><dd>${w.field}</dd></div></dl>`;
+  const quotesHTML = (w) => w.quotes.map(([f, t]) => f
+    ? `<p class="q"><span class="q-fig">${f}</span><span class="q-text">${t}</span></p>`
+    : `<p class="q wide"><span class="q-text">${t}</span></p>`).join('');
+
+  function sheetHTML(w) {
+    const metrics = w.metrics ? `<ul class="sh-metrics">${w.metrics.map(([f, c]) => `<li><span class="sh-fig">${f}</span><span class="sh-cap">${c}</span></li>`).join('')}</ul>` : '';
+    const did = w.did ? `<section class="sh-block"><h3>My role</h3><ul class="sh-list">${w.did.map((x) => `<li>${x}</li>`).join('')}</ul></section>` : '';
+    const cases = w.cases ? `<section class="sh-block sh-cases"><h3>Case studies</h3>${w.cases.map(([t, p]) => `<article class="sh-case"><h4>${t}</h4><p>${p}</p></article>`).join('')}</section>` : '';
+    const why = w.why ? `<section class="sh-block sh-why"><h3>Why ${w.short || w.title}</h3><p>${w.why}</p></section>` : '';
+    return `<header class="sh-head"><div><p class="sh-period">${w.period}</p><h2 class="sh-title" id="sheet-title" tabindex="-1">${w.title}</h2><p class="sh-role">${w.role}</p></div><div class="sh-art">${svg(ART[w.art]())}</div></header><p class="sh-lede">${w.lede}</p>${metrics}${cases}${did}${why}`;
+  }
+
+  /* A soap-bubble outline around a card for keyboard focus */
+  function bubbleSVG(seed) {
+    let a = seed * 7919 + 104729;
+    const rnd = () => ((a = (a * 9301 + 49297) % 233280) / 233280);
+    const p1 = rnd() * 6.283, p2 = rnd() * 6.283;
+    let d = '';
+    for (let k = 0, n = 96; k <= n; k++) {
+      const th = -2.3 + k / n * 6.2832;
+      const m = 1 + .02 * Math.sin(2 * th + p1) + .012 * Math.sin(3 * th + p2);
+      d += (k ? 'L' : 'M') + (Math.cos(th) * 84 * m).toFixed(1) + ' ' + (Math.sin(th) * 91 * m).toFixed(1);
+    }
+    const g = (th, r) => (Math.cos(th) * 84 * r).toFixed(1) + ' ' + (Math.sin(th) * 91 * r).toFixed(1);
+    const dx = Math.cos(4.82) * 84 * .74, dy = Math.sin(4.82) * 91 * .74;
+    return `<path class="film" d="${d}Z"/><path class="rim" pathLength="1" d="${d}"/>` +
+      `<path class="glint" d="M${g(3.6, .74)}A62.2 67.3 0 0 1 ${g(4.45, .74)}"/>` +
+      `<circle class="dot" cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="3.6"/>`;
+  }
+
+  const $ = (s) => document.querySelector(s);
+  const root = document.documentElement;
+  const page = $('#page'), topBar = $('#top'), crate = $('#work'), pin = $('#pin'), row = $('#row');
+  const crIn = $('#cr-in'), qIn = $('#q-in'), tint = $('#tint');
+  const heroEl = $('#hero'), hintEl = $('#hint'), hintTxt = $('#hint-txt'), credEl = $('#credits'), quoteEl = $('#quotes');
+  const ixBtn = $('#index-btn'), ixPanel = $('#index'), ixList = $('#ix-list');
+  const sheet = $('#sheet'), scrim = $('#scrim'), flipper = $('#flipper');
+  const front = $('#front'), back = $('#back'), sheetScroll = $('#sheet-scroll'), sheetInner = $('#sheet-inner');
+  const probe = $('#probe'), prevBtn = $('#prev'), nextBtn = $('#next'), closeBtn = $('#close');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const N = WORK.length;
+  const RZ = [-2, 3, -3.5, 1.5, -1, 2.5, -2.8];   /* each card rests at its own small angle */
+  const DECK = [0, -4, 3, -5.5, 4.5, -2.5, 6];
+  const INTRO = 70 / 40;                          /* the dealing stretch, relative to one card step */
+  const OVS = .5;                                 /* the stop where the deck lies unpacked */
+
+  row.innerHTML = WORK.map((w, i) => `<li class="slot" style="--c:${w.c};--d:${w.d}"><button class="card" type="button" data-i="${i}" aria-haspopup="dialog" aria-label="${w.title}, ${w.role}, ${w.period}"><span class="tilt"><span class="cf cardlike">${faceHTML(w)}</span></span></button><svg class="loop" viewBox="-100 -100 200 200" aria-hidden="true" focusable="false">${bubbleSVG(i + 3)}</svg></li>`).join('');
+  ixList.innerHTML = WORK.map((w, i) => `<li><button class="ix-row" type="button" data-go="${i}" style="--c:${w.c};--d:${w.d}"><span class="ix-dot" aria-hidden="true"></span><span class="ix-year">${w.year}</span><span class="ix-title">${w.title}</span><span class="ix-role">${w.role}</span></button></li>`).join('');
+
+  const slots = [...row.children];
+  const cards = slots.map((s) => s.querySelector('.card'));
+  const tilts = slots.map((s) => s.querySelector('.tilt'));
+  const ixRows = [...ixList.querySelectorAll('.ix-row')];
+
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const clamp01 = (v) => clamp(v, 0, 1);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease3 = (t) => 1 - Math.pow(1 - t, 3);
+  const ease3io = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  /* u is the scroll position in stops: 0 is the stacked deck, 1 is the first card, 7 the last */
+  const S = {
+    u: 0, uT: 0, pos: 0, target: 0,
+    W: 0, H: 0, w: 0, h: 0, cx: 0, cy: 0, ax: 0, ay: 0, cv: 0,
+    crateTop: 0, travel: 1, step: 1, ilen: 1,
+    hv: new Float64Array(N), hoverIdx: -1, shown: -1,
+    ov: { pos: 3, sp: .22, sc: .5 }, deckSc: .58, dirty: true, t0: 0, enter: 0,
+    fly: null, flyE: 0, flyHero: 0
+  };
+  const state = { open: false, busy: false, i: -1 };
+  const P = {};
+
+  function measure() {
+    S.W = pin.clientWidth; S.H = pin.clientHeight;
+    const narrow = S.W < 700;
+    let h = Math.min(S.H * (narrow ? .44 : .52), S.W * (narrow ? .68 : .5) * 7 / 5, 600);
+    h = Math.max(h, 170);
+    S.h = h; S.w = h * 5 / 7;
+    S.cx = S.W / 2;
+    S.cy = S.H * (narrow ? .55 : .54);
+    S.ax = Math.max(S.W * .44, S.w * .86);
+    S.ay = -S.H * .24;
+    S.cv = -S.H * .02;
+    const sc = narrow ? .4 : .5;
+    S.ov = { pos: (N - 1) / 2, sc, sp: clamp((.86 * S.W - S.w * sc) / ((N - 1) * S.ax), .12, .24) };
+    S.deckSc = narrow ? .52 : .58;
+    row.style.setProperty('--w', S.w.toFixed(2) + 'px');
+    row.style.setProperty('--h', S.h.toFixed(2) + 'px');
+    row.style.setProperty('--r', (S.w * .055).toFixed(2) + 'px');
+    row.style.setProperty('--lw', (210 / S.w).toFixed(3));
+    S.crateTop = crate.offsetTop;
+    S.travel = Math.max(1, crate.offsetHeight - pin.offsetHeight);
+    S.step = S.travel / (N - 1 + INTRO);
+    S.ilen = S.step * INTRO;
+    S.dirty = true;
+  }
+
+  function scrollU() {
+    const y = clamp(scrollY - S.crateTop, 0, S.travel);
+    return y <= S.ilen ? y / S.ilen : 1 + (y - S.ilen) / S.step;
+  }
+  const stopY = (s) => Math.round(S.crateTop + (s <= 1 ? s * S.ilen : S.ilen + (s - 1) * S.step));
+
+  let navUntil = 0;
+  function navScroll(top, behavior) {
+    navUntil = performance.now() + (behavior === 'smooth' ? 1600 : 250);
+    window.scrollTo({ top, behavior });
+  }
+  function goStop(s, smooth) {
+    navScroll(stopY(s), smooth && !reduced ? 'smooth' : 'instant');
+    wake();
+  }
+  const goTo = (i, smooth) => goStop(i + 1, smooth);
+
+  /* Where card i sits along the diagonal path, and how it is tilted */
+  function place(i, pos, sp, sc, hv, o) {
+    const d = i - pos, u = d * sp, au = Math.abs(u);
+    o.x = S.cx + u * S.ax;
+    o.y = S.cy + u * S.ay + S.cv * u * u;
+    o.s = sc * (1 - .22 * Math.min(au, 1.5));
+    o.op = au <= 1.45 ? 1 : Math.max(0, 1 - (au - 1.45) / .55);
+    const rz = -6 + RZ[i] + u * 7;
+    o.rx = 20 * (1 - hv);
+    o.ry = -12 * (1 - hv);
+    o.rz = rz * (1 - .75 * hv);
+    o.lift = -S.h * .025 * hv;
+    o.hs = 1 + .035 * hv;
+    o.z = 200 - Math.round(Math.abs(d) * 10);
+    return o;
+  }
+
+  const LAST = WORK.map(() => ({}));
+  function write(i, o) {
+    const L = LAST[i];
+    L.x = o.x; L.y = o.y; L.s = o.s; L.op = o.op; L.rx = o.rx; L.ry = o.ry; L.rz = o.rz; L.lift = o.lift; L.hs = o.hs; L.z = o.z;
+    const st = slots[i].style;
+    st.transform = `translate3d(${(o.x - S.w / 2).toFixed(2)}px,${(o.y - S.h / 2).toFixed(2)}px,0) scale(${o.s.toFixed(4)})`;
+    st.opacity = o.op < 1 ? o.op.toFixed(3) : '';
+    st.zIndex = String(o.z);
+    tilts[i].style.transform = `translate3d(0,${o.lift.toFixed(2)}px,0) perspective(1200px) rotateZ(${o.rz.toFixed(3)}deg) rotateX(${o.rx.toFixed(3)}deg) rotateY(${o.ry.toFixed(3)}deg) scale(${o.hs.toFixed(4)})`;
+  }
+
+  /* The deal, scrubbed by scroll: stacked deck, then the whole timeline along the diagonal, then the view flies in to the latest card */
+  function dealProgress() {
+    const u = clamp01(S.u);
+    return { a: clamp01(u / .46), E: ease3io(clamp01((u - .54) / .46)) };
+  }
+  function layout() {
+    const en = S.enter;
+    if (S.u >= 1 && en >= 1) {
+      for (let i = 0; i < N; i++) write(i, place(i, S.pos, 1, 1, S.hv[i], P));
+      return;
+    }
+    const { a, E } = dealProgress();
+    const posE = lerp(S.ov.pos, 0, E), spE = lerp(S.ov.sp, 1, E);
+    for (let i = 0; i < N; i++) {
+      const es = ease3(clamp01((a - i * .06) / .64));
+      const sc = lerp(lerp(S.deckSc, S.ov.sc, es), 1, E);
+      if (S.u >= 1) place(i, S.pos, 1, 1, S.hv[i], P);
+      else place(i, posE, spE * es, sc, S.hv[i] * es, P);
+      const k = 1 - es;
+      P.x += k * i * 1.8;
+      P.y += k * i * 1.4 + (1 - en) * 28;
+      P.rz += k * DECK[i];
+      P.op = Math.min(P.op, en);
+      if (S.u < 1) P.z = 300 - i;
+      write(i, P);
+    }
+  }
+  function uiFade() {
+    let ui, hero, hint;
+    if (S.fly) {
+      ui = clamp01((S.flyE - .72) / .28);
+      hero = S.flyHero * (1 - S.flyE);
+      hint = 0;
+    } else {
+      const k = clamp01(S.u / .3);
+      ui = clamp01((S.u - .86) / .14);
+      hero = S.enter * (1 - k);
+      hint = S.enter * clamp01(Math.max(1 - S.u / .12, 1 - Math.abs(S.u - OVS) / .07));
+      heroEl.style.transform = `translate3d(0,${(-24 * k).toFixed(2)}px,0)`;
+      const txt = S.u < .25 ? 'Scroll to explore' : 'Pick a card, or keep scrolling';
+      if (hintTxt.textContent !== txt) hintTxt.textContent = txt;
+    }
+    credEl.style.opacity = ui.toFixed(3);
+    quoteEl.style.opacity = ui.toFixed(3);
+    heroEl.style.opacity = hero.toFixed(3);
+    hintEl.style.opacity = hint.toFixed(3);
+  }
+
+  /* Fly straight into one card from wherever the deck is (a click in the spread, the Index, the keyboard) */
+  const T = {};
+  function flyTo(i) {
+    if (state.open) return;
+    clearHover();
+    S.fly = { t0: performance.now(), dur: reduced ? 1 : 700, to: i, snap: LAST.map((o) => ({ ...o })) };
+    S.flyE = 0;
+    S.flyHero = parseFloat(heroEl.style.opacity) || 0;
+    showItem(i, true);
+    navScroll(stopY(i + 1), 'instant');
+    wake();
+  }
+  function flyFrame(now) {
+    const F = S.fly;
+    const t = clamp01((now - F.t0) / F.dur);
+    S.flyE = ease3io(t);
+    for (let j = 0; j < N; j++) {
+      const lag = Math.min(Math.abs(j - F.to), 4) * .03;
+      const e = ease3io(clamp01((t - lag) / .88));
+      const a = F.snap[j], b = place(j, F.to, 1, 1, 0, T);
+      P.x = lerp(a.x, b.x, e); P.y = lerp(a.y, b.y, e); P.s = lerp(a.s, b.s, e);
+      P.rx = lerp(a.rx, b.rx, e); P.ry = lerp(a.ry, b.ry, e); P.rz = lerp(a.rz, b.rz, e);
+      P.lift = lerp(a.lift, b.lift, e); P.hs = lerp(a.hs, b.hs, e); P.op = lerp(a.op, b.op, e);
+      P.z = j === F.to ? 400 : (e < .5 ? a.z : b.z);
+      write(j, P);
+    }
+    if (t >= 1) {
+      S.fly = null;
+      S.uT = S.u = F.to + 1;
+      S.pos = S.target = F.to;
+      S.dirty = true;
+    }
+  }
+
+  /* A card's centre and size on screen, for the hover bubble */
+  const G = {};
+  function cardGeom(i, o) {
+    place(i, S.pos, 1, 1, S.hv[i], G);
+    const pinTop = Math.min(0, S.crateTop + S.travel - scrollY);
+    o.x = G.x;
+    o.y = pinTop + G.y + G.lift * G.s;
+    o.w = S.w * G.s * G.hs;
+    o.h = S.h * G.s * G.hs;
+    return o;
+  }
+
+  /* Credits and highlights follow the card in front */
+  let swapBusy = false, want = -1;
+  const markYear = (i) => {
+    ixRows.forEach((r, j) => {
+      r.classList.toggle('on', j === i);
+      if (j === i) r.setAttribute('aria-current', 'true'); else r.removeAttribute('aria-current');
+    });
+    tint.style.setProperty('--tc', WORK[i].c);
+    tint.style.setProperty('--td', WORK[i].d);
+  };
+  function showItem(i, instant) {
+    want = i;
+    if (instant || reduced || S.shown < 0) {
+      crIn.getAnimations().forEach((a) => a.cancel());
+      qIn.getAnimations().forEach((a) => a.cancel());
+      crIn.innerHTML = credHTML(WORK[i]);
+      qIn.innerHTML = quotesHTML(WORK[i]);
+      S.shown = i; markYear(i); swapBusy = false;
+      return;
+    }
+    if (swapBusy || i === S.shown) return;
+    swapBusy = true;
+    markYear(i);
+    const out = { duration: 150, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' };
+    const a1 = crIn.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-6px)' }], out);
+    qIn.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(6px)' }], out);
+    a1.finished.then(() => {
+      const j = want;
+      crIn.getAnimations().forEach((a) => a.cancel());
+      qIn.getAnimations().forEach((a) => a.cancel());
+      crIn.innerHTML = credHTML(WORK[j]);
+      qIn.innerHTML = quotesHTML(WORK[j]);
+      S.shown = j; markYear(j);
+      const inn = { duration: 340, easing: 'cubic-bezier(0,0,.2,1)' };
+      crIn.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], inn);
+      return qIn.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], inn).finished;
+    }).catch(() => {}).then(() => {
+      swapBusy = false;
+      if (want !== S.shown) showItem(want);
+    });
+  }
+
+  /* Cursor: a soap bubble that follows the pointer and squashes with speed.
+     Big bubbles (the hover bubble, and the cursor when it grows) are drawn as real soap film. */
+  const cursor = (() => {
+    if (!fine || reduced) return null;
+    const cv = $('#fx'), ctx = cv.getContext('2d');
+    const lab = $('#cursor-label'), labIn = lab.firstElementChild;
+    const darkQ = matchMedia('(prefers-color-scheme: dark)');
+    const LIGHT = ['#E35D9F', '#E9A23B', '#2BB596', '#4A86F0', '#9567F2'];
+    const DARK = ['#FF8CC4', '#FFC96B', '#6BE8C6', '#86B2FF', '#C3A2FF'];
+    const OUT_L = ['#8C9BFF', '#FF8FC6', '#7FD8F2', '#B79CFF', '#8C9BFF'];
+    const OUT_D = ['#B4BEFF', '#FFB3D9', '#A6E8FA', '#D3C2FF', '#B4BEFF'];
+    let dark = darkQ.matches;
+    const pal = () => (dark ? DARK : LIGHT);
+    const hair = () => (dark ? 'rgba(255,255,255,.3)' : 'rgba(29,29,31,.26)');
+    if (darkQ.addEventListener) darkQ.addEventListener('change', () => { dark = darkQ.matches; });
+    let dpr = 1, W = 0, H = 0;
+    const size = () => {
+      dpr = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    };
+    size();
+    addEventListener('resize', size);
+    const C = { mx: -99, my: -99, x: -99, y: -99, vx: 0, vy: 0, r: 0, vr: 0, rT: 9, a: 0, aT: 0, seen: false, moved: false, label: '', lw: 0, parts: [], s1: Math.random() * 6, s2: Math.random() * 6 };
+
+    addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      if (!C.seen) { C.seen = true; C.x = e.clientX; C.y = e.clientY; cv.classList.add('on'); root.classList.add('bubble-cursor'); }
+      C.mx = e.clientX; C.my = e.clientY; C.aT = 1; C.moved = true;
+      wake();
+    }, { passive: true });
+    addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') { C.aT = 0; wake(); return; }
+      C.vr -= C.r * .55;
+      burst();
+      wake();
+    });
+    root.addEventListener('mouseleave', () => { C.aT = 0; wake(); });
+    addEventListener('blur', () => { C.aT = 0; wake(); });
+
+    const outline = () => (dark ? OUT_D : OUT_L);
+    const pick = () => outline()[(Math.random() * 4) | 0];
+    function burst() {
+      for (let j = 0; j < 7; j++) {
+        const an = j / 7 * 6.2832 + Math.random() * .5, v = .1 + Math.random() * .08;
+        C.parts.push({
+          x: C.x + Math.cos(an) * C.r, y: C.y + Math.sin(an) * C.r,
+          vx: Math.cos(an) * v, vy: Math.sin(an) * v - .02,
+          r: 1.4 + Math.random() * 2.2, t: 0, T: 520 + Math.random() * 280, ph: Math.random() * 6.28, col: pick()
+        });
+      }
+    }
+    const conic = (c2, ang, x, y, stops, R) => {
+      let g;
+      if (c2.createConicGradient) g = c2.createConicGradient(ang, x, y);
+      else g = c2.createRadialGradient(x, y, 0, x, y, R);
+      stops.forEach((c, j) => g.addColorStop(j / (stops.length - 1), c));
+      return g;
+    };
+
+    /* Cartoon bubbles: a bold pastel outline, a soft flat tint, a crisp cel-shaded crescent,
+       a big white shine stroke and a dot. The membrane wobbles like jelly. */
+    function shape(x, y, rx, ry, now, k, s1, s2) {
+      const p = new Path2D();
+      for (let j = 0; j <= 72; j++) {
+        const th = j / 72 * 6.2832;
+        const m = 1 + k * (.016 * Math.sin(2 * th + now * .0015 + s1) + .01 * Math.sin(3 * th - now * .0011 + s2) + .005 * Math.sin(5 * th + now * .0022));
+        const px = x + Math.cos(th) * rx * m, py = y + Math.sin(th) * ry * m;
+        if (j) p.lineTo(px, py); else p.moveTo(px, py);
+      }
+      p.closePath();
+      return p;
+    }
+    function toon(x, y, rx, ry, now, k, s1, s2, a, lw) {
+      const R = Math.max(rx, ry);
+      const path = shape(x, y, rx, ry, now, k, s1, s2);
+      const body = ctx.createLinearGradient(x - rx, y - ry, x + rx, y + ry);
+      body.addColorStop(0, dark ? 'rgba(255,170,220,.16)' : 'rgba(255,190,228,.32)');
+      body.addColorStop(.5, dark ? 'rgba(170,200,255,.08)' : 'rgba(205,225,255,.16)');
+      body.addColorStop(1, dark ? 'rgba(150,240,220,.16)' : 'rgba(180,240,225,.32)');
+      ctx.globalAlpha = a;
+      ctx.fillStyle = body;
+      ctx.fill(path);
+      ctx.save();
+      ctx.clip(path);
+      const cx = x - rx * .28, cy = y - ry * .3;
+      const cs = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 1.32);
+      cs.addColorStop(0, 'rgba(120,130,255,0)');
+      cs.addColorStop(.86, 'rgba(120,130,255,0)');
+      cs.addColorStop(.866, dark ? 'rgba(160,170,255,.16)' : 'rgba(110,120,240,.13)');
+      cs.addColorStop(1, dark ? 'rgba(160,170,255,.22)' : 'rgba(110,120,240,.18)');
+      ctx.fillStyle = cs;
+      ctx.fillRect(x - R * 1.3, y - R * 1.3, R * 2.6, R * 2.6);
+      ctx.restore();
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.globalAlpha = a;
+      ctx.strokeStyle = conic(ctx, now * .0006 + s1, x, y, outline(), R);
+      ctx.lineWidth = lw;
+      ctx.stroke(path);
+      ctx.strokeStyle = '#fff';
+      ctx.globalAlpha = a * .5;
+      ctx.lineWidth = Math.max(1, lw * .6);
+      ctx.beginPath(); ctx.ellipse(x, y, rx * .9, ry * .9, 0, 2.2, 3.25); ctx.stroke();
+      ctx.globalAlpha = a * .95;
+      ctx.lineWidth = Math.max(1.6, R * .075);
+      ctx.beginPath(); ctx.ellipse(x, y, rx * .74, ry * .74, 0, 3.6, 4.45); ctx.stroke();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(x + Math.cos(4.82) * rx * .74, y + Math.sin(4.82) * ry * .74, Math.max(1, R * .042), 0, 6.2832); ctx.fill();
+      ctx.globalAlpha = a * .75;
+      ctx.lineWidth = Math.max(1.2, R * .04);
+      ctx.beginPath(); ctx.ellipse(x, y, rx * .8, ry * .8, 0, .35, .85); ctx.stroke();
+      ctx.globalAlpha = 1;
+      return path;
+    }
+
+    /* Hover bubble: a pastel line circles the card, closes, then the bubble inflates with a little boing.
+       When the pointer leaves (or the card opens) it pops, cartoon style. */
+    const HB = { idx: -1, t: 0, s1: 0, s2: 0, th0: 0, g: null };
+    const FL = [], HG = {};
+    function pop(g) {
+      FL.push({ x: g.x, y: g.y, rx: g.rx, ry: g.ry, t: 0, rot: Math.random() * .6 });
+      for (let k = 0, n = 12; k < n && C.parts.length < 96; k++) {
+        const th = k / n * 6.2832 + Math.random() * .4, dx = Math.cos(th), dy = Math.sin(th), v = .05 + Math.random() * .09;
+        C.parts.push({
+          x: g.x + dx * g.rx, y: g.y + dy * g.ry, vx: dx * v, vy: dy * v - .015,
+          r: 2 + Math.random() * 3.6, t: 0, T: 560 + Math.random() * 520, ph: Math.random() * 6.28, col: pick()
+        });
+      }
+    }
+    function hoverBubble(i) {
+      if (i === HB.idx) return;
+      if (HB.idx >= 0 && HB.g) pop(HB.g);
+      HB.idx = i; HB.t = 0; HB.g = null;
+      HB.s1 = Math.random() * 6.28; HB.s2 = Math.random() * 6.28; HB.th0 = -2.6 + Math.random() * .7;
+    }
+    function drawHB(now, dt) {
+      for (let j = FL.length - 1; j >= 0; j--) {
+        const f = FL[j];
+        f.t += dt;
+        const q = f.t / 300;
+        if (q >= 1) { FL.splice(j, 1); continue; }
+        const eq = ease3(q);
+        ctx.globalAlpha = 1 - q * q;
+        ctx.strokeStyle = conic(ctx, f.rot, f.x, f.y, outline(), 300);
+        ctx.lineWidth = 3.4 * (1 - q) + .6;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        for (let k = 0; k < 10; k++) {
+          const th = f.rot + k / 10 * 6.2832, c = Math.cos(th), s = Math.sin(th);
+          const r1 = 1.03 + .2 * eq, r2 = r1 + .1 * (1 - q) + .02;
+          ctx.moveTo(f.x + c * f.rx * r1, f.y + s * f.ry * r1);
+          ctx.lineTo(f.x + c * f.rx * r2, f.y + s * f.ry * r2);
+        }
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      if (HB.idx < 0 || S.u < .98 || S.fly || state.open) return FL.length > 0;
+      HB.t += dt;
+      const g = cardGeom(HB.idx, HG);
+      const R0 = .5 * Math.hypot(g.w, g.h) * 1.06;
+      const D = 950;
+      const e = ease3io(Math.min(1, HB.t / D));
+      const raw = clamp01((HB.t - D * .82) / 700);
+      const inf = ease3(Math.min(1, raw * 1.6));
+      const boing = raw > 0 ? 1 + .08 * Math.sin(raw * Math.PI * 3) * (1 - raw) : 1;
+      const rx = R0 * .92 * boing, ry = R0 * (2 - boing);
+      HB.g = { x: g.x, y: g.y, rx, ry };
+      const k = .6 + 1.2 * inf;
+      if (inf > 0) toon(g.x, g.y, rx, ry, now, k, HB.s1, HB.s2, inf, 3.2);
+      const lineA = 1 - inf;
+      if (lineA > .02) {
+        const sweep = e * (1.07 - .07 * inf);
+        const steps = Math.max(2, Math.round(120 * sweep));
+        ctx.beginPath();
+        for (let j = 0; j <= steps; j++) {
+          const u = j / steps, th = HB.th0 + u * sweep * 6.2832;
+          const sp = 1 + .03 * Math.max(0, u * sweep - .9) / .17 * (1 - inf);
+          const m = (1 + k * (.016 * Math.sin(2 * th + now * .0015 + HB.s1) + .01 * Math.sin(3 * th - now * .0011 + HB.s2) + .005 * Math.sin(5 * th + now * .0022))) * sp;
+          const px = g.x + Math.cos(th) * rx * m, py = g.y + Math.sin(th) * ry * m;
+          if (j) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+        }
+        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.globalAlpha = lineA;
+        ctx.strokeStyle = conic(ctx, now * .0006 + HB.s1, g.x, g.y, outline(), R0);
+        ctx.lineWidth = 3.2;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+      return true;
+    }
+
+    function setTarget(kind, label) {
+      C.rT = kind === 'card' ? 26 : kind === 'link' ? 20 : 9;
+      if (label !== C.label) {
+        if (label) { labIn.textContent = label; C.lw = labIn.offsetWidth; }
+        lab.classList.toggle('on', !!label);
+        C.label = label;
+      }
+    }
+    function draw(now, sp, dt) {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      const hb = drawHB(now, dt);
+      for (const p of C.parts) {
+        const u = p.t / p.T;
+        let a = u < .15 ? u / .15 : 1, sc = 1;
+        if (u > .84) { const q = (u - .84) / .16; sc = 1 + q * .6; a *= 1 - q; }
+        const r = p.r * sc;
+        ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832);
+        ctx.globalAlpha = a * .12; ctx.fillStyle = p.col; ctx.fill();
+        ctx.globalAlpha = a * .9; ctx.lineWidth = 1; ctx.strokeStyle = p.col; ctx.stroke();
+        if (r > 2.4) {
+          ctx.globalAlpha = a * .9; ctx.fillStyle = '#fff';
+          ctx.beginPath(); ctx.arc(p.x - r * .38, p.y - r * .38, r * .26, 0, 6.2832); ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      if (C.a < .01 || C.r < .5) return hb;
+      const r = C.r, st = Math.min(sp * .45, .3), an = Math.atan2(C.vy, C.vx);
+      ctx.save();
+      ctx.translate(C.x, C.y);
+      ctx.rotate(an); ctx.scale(1 + st, 1 / (1 + st * .7)); ctx.rotate(-an);
+      if (!dark) {
+        ctx.globalAlpha = C.a * .45;
+        ctx.strokeStyle = 'rgba(29,29,31,.4)';
+        ctx.lineWidth = r > 16 ? 4.2 : 3.4;
+        ctx.beginPath(); ctx.arc(0, 0, r, 0, 6.2832); ctx.stroke();
+      }
+      toon(0, 0, r, r, now, .7, C.s1, C.s2, C.a, r > 16 ? 2.6 : 2);
+      ctx.restore();
+      ctx.globalAlpha = 1;
+      return hb;
+    }
+    function frame(dt, now) {
+      const s = dt / 16.667;
+      const k = 1 - Math.exp(-dt / 36);
+      const nx = C.x + (C.mx - C.x) * k, ny = C.y + (C.my - C.y) * k;
+      C.vx = (nx - C.x) / dt; C.vy = (ny - C.y) / dt;
+      C.x = nx; C.y = ny;
+      C.vr += (C.rT - C.r) * .15 * s;
+      C.vr *= Math.pow(.72, s);
+      C.r += C.vr * s;
+      C.a += (C.aT - C.a) * (1 - Math.exp(-dt / 80));
+      const sp = Math.hypot(C.vx, C.vy);
+      for (let j = C.parts.length - 1; j >= 0; j--) {
+        const p = C.parts[j];
+        p.t += dt;
+        if (p.t >= p.T) { C.parts.splice(j, 1); continue; }
+        const damp = Math.pow(.986, s);
+        p.vx *= damp;
+        p.vy = p.vy * damp - .00004 * dt;
+        p.x += p.vx * dt + Math.sin(p.t * .007 + p.ph) * .14 * s;
+        p.y += p.vy * dt;
+      }
+      const hb = draw(now, sp, dt);
+      if (C.label) {
+        let lx = C.x + C.r + 10;
+        const left = lx + C.lw > W - 8;
+        if (left) lx = C.x - C.r - 10 - C.lw;
+        lab.classList.toggle('left', left);
+        lab.style.transform = `translate3d(${lx.toFixed(1)}px,${(C.y - 15).toFixed(1)}px,0)`;
+      }
+      return hb || C.r > 12 || !(Math.abs(C.mx - C.x) < .1 && Math.abs(C.my - C.y) < .1 && Math.abs(C.rT - C.r) < .05 &&
+        Math.abs(C.vr) < .02 && Math.abs(C.aT - C.a) < .01 && C.parts.length === 0);
+    }
+    return { C, frame, setTarget, hoverBubble };
+  })();
+
+  function hitTest() {
+    const C = cursor.C;
+    let kind = '', label = '', hi = -1;
+    if (C.seen && C.aT > 0) {
+      const el = document.elementFromPoint(C.mx, C.my);
+      if (el) {
+        const card = !state.open && el.closest('.card');
+        if (card) {
+          hi = +card.dataset.i;
+          kind = 'card';
+          label = S.uT < .25 ? 'Explore' : 'Open';
+        } else if (el.closest('a, button, [data-go]')) kind = 'link';
+      }
+    }
+    if (hi !== S.hoverIdx) {
+      if (S.hoverIdx >= 0) slots[S.hoverIdx].classList.remove('hover');
+      if (hi >= 0) slots[hi].classList.add('hover');
+      S.hoverIdx = hi;
+      cursor.hoverBubble(hi);
+    }
+    cursor.setTarget(kind, label);
+  }
+
+  /* One animation loop for the stage and the cursor; it sleeps when nothing moves */
+  let raf = 0, last = 0;
+  function wake() {
+    if (!raf) { last = performance.now() - 16; raf = requestAnimationFrame(tick); }
+  }
+  function tick(now) {
+    raf = 0;
+    const dt = Math.min(48, Math.max(1, now - last));
+    last = now;
+    let busy = false;
+    const moved = cursor ? cursor.C.moved : false;
+    if (cursor) cursor.C.moved = false;
+    if (!state.open) busy = stageFrame(dt, now, moved);
+    else if (moved) hitTest();
+    if (cursor) busy = cursor.frame(dt, now) || busy;
+    if (busy) raf = requestAnimationFrame(tick);
+  }
+  function stageFrame(dt, now, moved) {
+    if (S.fly) {
+      flyFrame(now);
+      uiFade();
+      if (cursor && (moved || !S.fly)) hitTest();
+      return true;
+    }
+    S.uT = scrollU();
+    const prev = S.u;
+    S.u = reduced ? S.uT : S.u + (S.uT - S.u) * (1 - Math.exp(-dt / 55));
+    if (Math.abs(S.uT - S.u) < 2e-4) S.u = S.uT;
+    S.pos = Math.max(0, S.u - 1);
+    S.target = Math.max(0, S.uT - 1);
+    const moving = S.u !== prev;
+    const entering = S.enter < 1;
+    if (entering) S.enter = reduced ? 1 : ease3(clamp01((now - S.t0) / 900));
+    if (cursor && (moved || moving)) hitTest();
+    let anim = false;
+    const kh = 1 - Math.exp(-dt / 130);
+    for (let i = 0; i < N; i++) {
+      const t = i === S.hoverIdx ? 1 : 0;
+      let v = S.hv[i];
+      if (v !== t) {
+        v += (t - v) * kh;
+        if (Math.abs(t - v) < 1e-3) v = t; else anim = true;
+        S.hv[i] = v;
+      }
+    }
+    if (moving || anim || entering || S.dirty) {
+      layout();
+      uiFade();
+      S.dirty = false;
+    }
+    const fi = clamp(Math.round(S.pos), 0, N - 1);
+    if (fi !== want) showItem(fi);
+    topBar.classList.toggle('solid', scrollY > S.crateTop + S.travel + 8);
+    return moving || anim || entering;
+  }
+
+  /* Normal browser scrolling: the stage simply follows the scroll position */
+  addEventListener('scroll', wake, { passive: true });
+
+  /* Safety stops: calm scrolling stays free, but a fling that is too fast is caught at the next
+     checkpoint (the unpacked spread, then each card) and the rest of that fling is absorbed. */
+  const checkpoints = () => [OVS, 1, 2, 3, 4, 5, 6, 7].map(stopY);
+  function crossed(from, to) {
+    const cps = checkpoints();
+    if (to > from) { for (const c of cps) if (c > from + 1 && c <= to) return c; }
+    else if (to < from) { for (let k = cps.length - 1; k >= 0; k--) if (cps[k] < from - 1 && cps[k] >= to) return cps[k]; }
+    return null;
+  }
+  const FAST_WHEEL = 2.2, FAST_TOUCH = 1.8;   /* px per ms */
+  /* The browser animates wheel scrolling, so the page lags behind the fling:
+     follow where the gesture is heading (wt), not where the page is right now. */
+  let lastWheelT = 0, wheelV = 0, wheelHold = false, holdUntil = 0, wt = 0, wDir = 0;
+  addEventListener('wheel', (e) => {
+    if (state.open || ixOpen || amOpen || S.fly) return;
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    const now = performance.now();
+    const gap = now - lastWheelT;
+    lastWheelT = now;
+    navUntil = 0;
+    const dy = e.deltaY * (e.deltaMode === 1 ? 32 : e.deltaMode === 2 ? innerHeight : 1);
+    const dir = Math.sign(dy);
+    const inst = Math.abs(dy) / Math.max(8, Math.min(gap, 120));
+    wheelV = gap > 120 ? inst : Math.max(inst, wheelV * .5 + inst * .5);
+    if (wheelHold) {
+      if (gap > 220 && now > holdUntil) wheelHold = false;
+      else { e.preventDefault(); return; }
+    }
+    if (gap > 120 || dir !== wDir) wt = scrollY;
+    wDir = dir;
+    const maxY = document.documentElement.scrollHeight - innerHeight;
+    const next = clamp(wt + dy, 0, maxY);
+    const cp = reduced || wheelV < FAST_WHEEL ? null : crossed(wt, next);
+    if (cp === null) { wt = next; return; }
+    e.preventDefault();
+    window.scrollTo({ top: cp, behavior: 'instant' });
+    wt = cp;
+    wheelHold = true;
+    holdUntil = now + 380;
+  }, { passive: false });
+
+  let touching = false, touchEndT = -1e9, lastSY = scrollY, lastST = performance.now(), scrollV = 0, pinY = null, pinUntil = 0;
+  addEventListener('touchstart', () => { touching = true; pinY = null; navUntil = 0; }, { passive: true });
+  const untouch = () => { touching = false; touchEndT = performance.now(); };
+  addEventListener('touchend', untouch, { passive: true });
+  addEventListener('touchcancel', untouch, { passive: true });
+  document.addEventListener('click', (e) => {
+    if (e.target.closest && e.target.closest('a[href^="#"]')) navUntil = performance.now() + 1600;
+  }, true);
+  addEventListener('scroll', () => {
+    const now = performance.now(), y = scrollY;
+    const v = (y - lastSY) / Math.max(1, now - lastST);
+    scrollV = scrollV * .5 + v * .5;
+    if (pinY !== null && now < pinUntil && !touching) {
+      if (Math.abs(y - pinY) > 1) window.scrollTo({ top: pinY, behavior: 'instant' });
+    } else {
+      pinY = null;
+      if (!reduced && !touching && !state.open && !S.fly && now - touchEndT < 2500 && now > navUntil && Math.abs(scrollV) > FAST_TOUCH) {
+        const cp = crossed(lastSY, y);
+        if (cp !== null) {
+          window.scrollTo({ top: cp, behavior: 'instant' });
+          pinY = cp;
+          pinUntil = now + 450;
+        }
+      }
+    }
+    lastSY = scrollY;
+    lastST = now;
+  }, { passive: true });
+
+  /* A sideways swipe on a trackpad moves through the cards too */
+  pin.addEventListener('wheel', (e) => {
+    if (state.open || S.fly) return;
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 1 && scrollU() >= 1) {
+      e.preventDefault();
+      window.scrollBy({ top: e.deltaX * (e.deltaMode === 1 ? 32 : 1), behavior: 'instant' });
+    }
+  }, { passive: false });
+
+  /* Clicks: the deck unpacks; any card after that opens straight away */
+  let quietFocus = false;
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => {
+      if (S.fly) return;
+      if (S.uT < .25) { goStop(OVS, true); return; }
+      open(i);
+    });
+    card.addEventListener('focus', () => {
+      if (quietFocus || state.open || S.fly || !card.matches(':focus-visible')) return;
+      if (S.uT < .99) flyTo(i);
+      else if (Math.abs(S.uT - (i + 1)) > .01) goTo(i, true);
+    });
+  });
+  row.addEventListener('keydown', (e) => {
+    const i = cards.indexOf(document.activeElement);
+    if (i < 0 || state.open) return;
+    const j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : -1;
+    if (j >= 0 && j < N) { e.preventDefault(); cards[j].focus(); }
+  });
+
+  /* Index */
+  let ixOpen = false;
+  function openIndex() {
+    if (ixOpen) return;
+    ixOpen = true;
+    ixPanel.hidden = false;
+    ixBtn.setAttribute('aria-expanded', 'true');
+    ixPanel.getAnimations().forEach((a) => a.cancel());
+    if (!reduced) {
+      ixPanel.animate([{ opacity: 0, transform: 'translateY(-8px) scale(.95)' }, { opacity: 1, transform: 'none' }],
+        { duration: 460, easing: 'cubic-bezier(.2,.9,.25,1.12)' });
+      ixRows.forEach((r, k) => r.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }],
+        { duration: 380, delay: 60 + k * 30, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'backwards' }));
+    }
+    ixRows[clamp(Math.round(S.target), 0, N - 1)].focus({ preventScroll: true });
+  }
+  function closeIndex(returnFocus) {
+    if (!ixOpen) return;
+    ixOpen = false;
+    ixBtn.setAttribute('aria-expanded', 'false');
+    if (returnFocus) ixBtn.focus();
+    const hide = () => { if (!ixOpen) ixPanel.hidden = true; };
+    if (reduced) { hide(); return; }
+    ixPanel.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-4px) scale(.98)' }],
+      { duration: 160, easing: 'cubic-bezier(.4,0,1,1)' }).finished.then(hide, hide);
+  }
+  ixBtn.addEventListener('click', () => { if (ixOpen) closeIndex(false); else openIndex(); });
+  ixList.addEventListener('click', (e) => {
+    const r = e.target.closest('[data-go]');
+    if (!r) return;
+    const i = +r.dataset.go;
+    const byKey = e.detail === 0;
+    closeIndex(false);
+    if (S.uT < .99) flyTo(i); else goTo(i, true);
+    if (byKey) cards[i].focus({ preventScroll: true });
+  });
+  ixPanel.addEventListener('keydown', (e) => {
+    const k = ixRows.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      ixRows[clamp(k + (e.key === 'ArrowDown' ? 1 : -1), 0, N - 1)].focus();
+    } else if (e.key === 'Home' || e.key === 'End') {
+      e.preventDefault();
+      ixRows[e.key === 'Home' ? 0 : N - 1].focus();
+    }
+  });
+  document.addEventListener('pointerdown', (e) => {
+    if (ixOpen && !ixPanel.contains(e.target) && !ixBtn.contains(e.target)) closeIndex(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (ixOpen && e.key === 'Escape') { e.preventDefault(); closeIndex(true); }
+  });
+  ixPanel.addEventListener('focusout', (e) => {
+    if (ixOpen && e.relatedTarget && !ixPanel.contains(e.relatedTarget) && e.relatedTarget !== ixBtn) closeIndex(false);
+  });
+
+  /* Detail sheet: the card turns over and grows into the detail view */
+  const DUR = 880;
+  const EASE = 'cubic-bezier(.62,0,.18,1)';
+  const rectKF = (r) => ({ top: r.top + 'px', left: r.left + 'px', width: r.width + 'px', height: r.height + 'px' });
+  const radiusOf = (el, fallback) => parseFloat(getComputedStyle(el).borderTopLeftRadius) || fallback;
+  const sizeSheet = (r) => { sheetScroll.style.width = r ? r.width + 'px' : ''; sheetScroll.style.height = r ? r.height + 'px' : ''; };
+  const tiltTF = (o, persp) => `perspective(${persp.toFixed(1)}px) rotateZ(${o.rz.toFixed(3)}deg) rotateX(${o.rx.toFixed(3)}deg) rotateY(${o.ry.toFixed(3)}deg)`;
+  const FLAT = 'perspective(2400px) rotateZ(0deg) rotateX(0deg) rotateY(180deg)';
+
+  function setHash(id) {
+    const target = id ? '#' + id : '';
+    if (location.hash === target) return;
+    try { history.replaceState(null, '', id ? '#' + id : location.pathname + location.search); } catch (e) { /* ignore */ }
+  }
+  const hashIndex = () => WORK.findIndex((w) => '#' + w.id === location.hash);
+
+  function paint(i) {
+    const w = WORK[i], p = WORK[i - 1], n = WORK[i + 1];
+    flipper.style.setProperty('--c', w.c);
+    flipper.style.setProperty('--d', w.d);
+    front.innerHTML = faceHTML(w);
+    sheetInner.innerHTML = sheetHTML(w);
+    prevBtn.hidden = !p;
+    nextBtn.hidden = !n;
+    if (p) prevBtn.querySelector('.nav-name').textContent = p.short || p.title;
+    if (n) nextBtn.querySelector('.nav-name').textContent = n.short || n.title;
+  }
+  function lockPage(on) {
+    page.inert = on;
+    root.classList.toggle('locked', on);
+  }
+  function clearHover() {
+    if (S.hoverIdx >= 0) slots[S.hoverIdx].classList.remove('hover');
+    S.hoverIdx = -1;
+    if (cursor) { cursor.hoverBubble(-1); cursor.setTarget('', ''); wake(); }
+  }
+  function settleOn(i) {
+    S.uT = S.u = i + 1;
+    S.target = S.pos = i;
+    S.enter = 1;
+    layout();
+    uiFade();
+  }
+
+  function open(i) {
+    if (state.busy) return;
+    if (state.open) { go(i); return; }
+    if (S.fly) return;
+    state.busy = true; state.open = true; state.i = i;
+
+    /* Open straight from where the card is now: no centring first */
+    const o = LAST[i];
+    const pr = pin.getBoundingClientRect();
+    const fw = S.w * o.s * o.hs, fh = S.h * o.s * o.hs;
+    const from = { left: pr.left + o.x - fw / 2, top: pr.top + o.y + o.lift * o.s - fh / 2, width: fw, height: fh };
+    const tf0 = tiltTF(o, 1200 * o.s * o.hs);
+    const r0 = S.w * .055 * o.s * o.hs;
+
+    clearHover();
+    paint(i);
+    setHash(WORK[i].id);
+    sheet.hidden = false;
+    const to = probe.getBoundingClientRect();
+    const r1 = radiusOf(back, 28);
+
+    page.style.transformOrigin = `50% ${scrollY + innerHeight / 2}px`;
+    page.classList.add('receded');
+    lockPage(true);
+    slots[i].classList.add('is-lifted');
+    sheetScroll.scrollTop = 0;
+
+    if (reduced) {
+      flipper.classList.add('settled');
+      scrim.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, fill: 'both' });
+      flipper.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200 }).finished.then(afterOpen);
+      return;
+    }
+    flipper.classList.add('animating');
+    sizeSheet(to);
+    const t = { duration: DUR, easing: EASE, fill: 'both' };
+    const anims = [
+      flipper.animate([{ ...rectKF(from), transform: tf0 }, { ...rectKF(to), transform: FLAT }], t),
+      front.animate([{ borderRadius: r0 + 'px' }, { borderRadius: r1 + 'px' }], t),
+      back.animate([{ borderRadius: r0 + 'px' }, { borderRadius: r1 + 'px' }], t),
+      sheetInner.animate([
+        { opacity: 0, transform: 'scale(.94)', offset: 0 },
+        { opacity: 0, transform: 'scale(.94)', offset: .42 },
+        { opacity: 1, transform: 'scale(1)', offset: 1 }
+      ], { duration: DUR, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'both' })
+    ];
+    scrim.animate([{ opacity: 0 }, { opacity: 1 }], { duration: DUR * .8, easing: 'ease', fill: 'both' });
+    anims[0].finished.then(() => {
+      flipper.classList.remove('animating');
+      flipper.classList.add('settled');
+      sizeSheet(null);
+      anims.forEach((a) => a.cancel());
+      afterOpen();
+    });
+  }
+  function afterOpen() {
+    state.busy = false;
+    const title = document.getElementById('sheet-title');
+    if (title) title.focus({ preventScroll: true });
+  }
+
+  function close() {
+    if (!state.open || state.busy) return;
+    state.busy = true;
+    const i = state.i;
+    setHash('');
+
+    /* The card flies back to where it sits on the stage. If it is out of view
+       (after moving through the sheet), centre the stage on it first. */
+    root.classList.remove('locked');
+    S.hv.fill(0);
+    clearHover();
+    layout();
+    const L = LAST[i];
+    const inView = L.op > .5 && L.x > -S.w * .3 && L.x < S.W + S.w * .3 && L.y > -S.h * .3 && L.y < S.H + S.h * .3;
+    if (!inView) {
+      goTo(i, false);
+      settleOn(i);
+      showItem(i, true);
+    }
+    page.style.transformOrigin = `50% ${scrollY + innerHeight / 2}px`;
+
+    const o = LAST[i];
+    const pinTop = Math.min(0, S.crateTop + S.travel - scrollY);
+    const fw = S.w * o.s * o.hs, fh = S.h * o.s * o.hs;
+    const to = { left: o.x - fw / 2, top: pinTop + o.y + o.lift * o.s - fh / 2, width: fw, height: fh };
+    const tf1 = tiltTF(o, 1200 * o.s * o.hs);
+    const r0 = S.w * .055 * o.s * o.hs;
+
+    const done = () => {
+      sheet.hidden = true;
+      slots[i].classList.remove('is-lifted');
+      flipper.classList.remove('animating', 'settled');
+      sizeSheet(null);
+      flipper.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+      scrim.getAnimations().forEach((a) => a.cancel());
+      lockPage(false);
+      state.open = false;
+      state.busy = false;
+      quietFocus = true;
+      cards[i].focus({ preventScroll: true });
+      quietFocus = false;
+      wake();
+    };
+
+    if (reduced) {
+      page.classList.remove('receded');
+      scrim.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'both' });
+      flipper.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 180, fill: 'both' }).finished.then(done);
+      return;
+    }
+
+    const from = flipper.getBoundingClientRect();
+    const r1 = radiusOf(back, 28);
+    front.innerHTML = faceHTML(WORK[i]);
+    flipper.classList.remove('settled');
+    flipper.classList.add('animating');
+    sizeSheet(from);
+    const t = { duration: DUR, easing: EASE, fill: 'both' };
+    const main = flipper.animate([{ ...rectKF(from), transform: FLAT }, { ...rectKF(to), transform: tf1 }], t);
+    front.animate([{ borderRadius: r1 + 'px' }, { borderRadius: r0 + 'px' }], t);
+    back.animate([{ borderRadius: r1 + 'px' }, { borderRadius: r0 + 'px' }], t);
+    sheetInner.animate([
+      { opacity: 1, transform: 'scale(1)', offset: 0 },
+      { opacity: 0, transform: 'scale(.94)', offset: .45 },
+      { opacity: 0, transform: 'scale(.94)', offset: 1 }
+    ], { duration: DUR, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'both' });
+    scrim.getAnimations().forEach((a) => a.cancel());
+    scrim.animate([{ opacity: 1 }, { opacity: 0 }], { duration: DUR * .9, easing: 'ease', fill: 'both' });
+    page.classList.remove('receded');
+    main.finished.then(done);
+  }
+
+  /* Move to a neighbouring experience without leaving the sheet */
+  function go(j) {
+    if (!state.open || state.busy || j < 0 || j >= N || j === state.i) return;
+    state.busy = true;
+    const dir2 = j > state.i ? 1 : -1;
+    const D = reduced ? 0 : 26;
+    setHash(WORK[j].id);
+    const out = sheetInner.animate(
+      [{ opacity: 1, transform: 'translateX(0px)' }, { opacity: 0, transform: `translateX(${-dir2 * D}px)` }],
+      { duration: reduced ? 120 : 170, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
+    out.finished.then(() => {
+      const hadFocus = document.activeElement;
+      slots[state.i].classList.remove('is-lifted');
+      state.i = j;
+      slots[j].classList.add('is-lifted');
+      paint(j);
+      sheetScroll.scrollTop = 0;
+      out.cancel();
+      sheetInner.animate(
+        [{ opacity: 0, transform: `translateX(${dir2 * D}px)` }, { opacity: 1, transform: 'translateX(0px)' }],
+        { duration: reduced ? 160 : 340, easing: 'cubic-bezier(0,0,.2,1)', fill: 'backwards' }
+      ).finished.then(() => { state.busy = false; });
+      if (hadFocus && hadFocus.hidden) document.getElementById('sheet-title').focus({ preventScroll: true });
+    });
+  }
+
+  closeBtn.addEventListener('click', close);
+  scrim.addEventListener('click', close);
+  prevBtn.addEventListener('click', () => go(state.i - 1));
+  nextBtn.addEventListener('click', () => go(state.i + 1));
+  document.addEventListener('keydown', (e) => {
+    if (!state.open || e.altKey || e.metaKey || e.ctrlKey) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); go(state.i + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(state.i - 1); }
+  });
+  addEventListener('hashchange', () => {
+    const i = hashIndex();
+    if (i >= 0) {
+      if (state.open) go(i);
+      else { goTo(i, false); settleOn(i); open(i); }
+    } else if (state.open) {
+      close();
+    }
+  });
+
+  /* "Redesign it yourself": looks like an AI prompt, leads to a human */
+  const askForm = $('#ask-form'), askInput = $('#ask-input'), askSend = $('#ask-send'), askStatus = $('#ask-status');
+  const am = $('#ask-modal'), amCard = $('#ask-card'), amScrim = $('#ask-scrim');
+  const amContact = $('#am-contact'), amCopy = $('#am-copy'), amClose = $('#am-close');
+  const EMAIL = 'soline@pignal.com';
+  let thinking = false, amOpen = false;
+  const syncSend = () => { askSend.disabled = thinking || !askInput.value.trim(); };
+  const grow = () => { askInput.style.height = 'auto'; askInput.style.height = Math.min(askInput.scrollHeight, 160) + 'px'; };
+  const submitAsk = () => { if (askForm.requestSubmit) askForm.requestSubmit(); else askForm.dispatchEvent(new Event('submit', { cancelable: true })); };
+  askInput.addEventListener('input', () => { grow(); syncSend(); });
+  askInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); submitAsk(); }
+  });
+  document.querySelectorAll('.chip').forEach((chip) => chip.addEventListener('click', () => {
+    if (thinking) return;
+    askInput.value = chip.textContent;
+    grow(); syncSend();
+    submitAsk();
+  }));
+  askForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = askInput.value.trim();
+    if (!text || thinking) return;
+    thinking = true; syncSend();
+    askInput.readOnly = true;
+    askForm.classList.add('thinking');
+    askStatus.textContent = 'Rewriting the portfolio…';
+    askStatus.classList.add('shimmer');
+    setTimeout(openAsk, reduced ? 300 : 1500);
+  });
+  function resetAsk() {
+    thinking = false;
+    askInput.readOnly = false;
+    askInput.value = '';
+    grow(); syncSend();
+    askForm.classList.remove('thinking');
+    askStatus.textContent = '';
+    askStatus.classList.remove('shimmer');
+  }
+  function openAsk() {
+    resetAsk();
+    am.hidden = false;
+    amOpen = true;
+    page.inert = true;
+    root.classList.add('locked');
+    if (!reduced) {
+      amScrim.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: 'ease' });
+      amCard.animate([{ opacity: 0, transform: 'translateY(16px) scale(.86)' }, { opacity: 1, transform: 'none' }],
+        { duration: 560, easing: 'cubic-bezier(.2,1.35,.4,1)' });
+    }
+    amContact.focus();
+  }
+  function closeAsk(then) {
+    if (!amOpen) return;
+    amOpen = false;
+    const done = () => {
+      am.hidden = true;
+      page.inert = false;
+      root.classList.remove('locked');
+      if (then) then(); else askInput.focus({ preventScroll: true });
+      wake();
+    };
+    if (reduced) { done(); return; }
+    amScrim.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease', fill: 'forwards' });
+    amCard.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(.94)' }],
+      { duration: 200, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' }).finished.then(() => {
+      amScrim.getAnimations().forEach((a) => a.cancel());
+      amCard.getAnimations().forEach((a) => a.cancel());
+      done();
+    });
+  }
+  amClose.addEventListener('click', () => closeAsk());
+  amScrim.addEventListener('click', () => closeAsk());
+  amContact.addEventListener('click', () => closeAsk(() => {
+    navUntil = performance.now() + 1600;
+    $('#contact').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    $('.mail').focus({ preventScroll: true });
+  }));
+  amCopy.addEventListener('click', () => {
+    const show = (t) => { amCopy.textContent = t; setTimeout(() => { amCopy.textContent = 'Copy my email'; }, 2400); };
+    try {
+      navigator.clipboard.writeText(EMAIL).then(() => show('Copied'), () => show(EMAIL));
+    } catch (err) { show(EMAIL); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!amOpen) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeAsk(); return; }
+    if (e.key === 'Tab') {
+      const f = [amContact, amCopy, amClose];
+      const k = f.indexOf(document.activeElement);
+      e.preventDefault();
+      f[(k + (e.shiftKey ? f.length - 1 : 1)) % f.length].focus();
+    }
+  });
+
+  /* The placeholder types out ideas while the bar is idle */
+  if (!reduced) {
+    const IDEAS = ['Make the cards bigger', 'Turn the background deep blue', 'Use a serif typeface', 'Show only UX work', 'Add confetti everywhere'];
+    let k = 0, c = 0, back = false;
+    const type = () => {
+      let wait = 55;
+      if (document.activeElement === askInput || askInput.value) {
+        askInput.placeholder = 'Describe a change…';
+        wait = 800;
+      } else {
+        const w = IDEAS[k];
+        if (!back) {
+          c++;
+          if (c >= w.length) { back = true; wait = 1700; }
+        } else {
+          c--;
+          wait = 22;
+          if (c <= 0) { back = false; k = (k + 1) % IDEAS.length; wait = 400; }
+        }
+        askInput.placeholder = w.slice(0, c) + '…';
+      }
+      setTimeout(type, wait);
+    };
+    setTimeout(type, 1200);
+  }
+
+  /* Start on the stacked deck; nothing moves until the visitor scrolls */
+  measure();
+  S.uT = S.u = scrollU();
+  S.pos = S.target = Math.max(0, S.u - 1);
+  S.t0 = performance.now();
+  S.enter = reduced ? 1 : 0;
+  layout();
+  uiFade();
+  showItem(clamp(Math.round(S.pos), 0, N - 1), true);
+  root.classList.remove('js-intro');
+  if ('ResizeObserver' in window) new ResizeObserver(() => { measure(); wake(); }).observe(pin);
+  addEventListener('resize', () => { measure(); wake(); });
+  wake();
+  const hi = hashIndex();
+  if (hi >= 0) requestAnimationFrame(() => { goTo(hi, false); settleOn(hi); open(hi); });
+})();
+</script>
+</body>
+</html>
